@@ -11,6 +11,12 @@ import play.api.libs.json.Json
  */
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+    case class User(val age: Int, val name: String)
+
+    val listUsers = List(
+        User(32, "user1"),
+        User(45, "user2")
+    )
 
     val hello = Action {
         Ok("hello!!!!!!")
@@ -21,6 +27,19 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
             Json.obj(
                 "id" -> 2323,
                 "name" -> "anyname"
+            )
+        )
+    }
+
+    def list = Action {
+        Ok(
+            Json.arr(
+                listUsers.map(
+                    userItem => Json.obj(
+                        "age" -> userItem.age,
+                        "name" -> userItem.name
+                    )
+                )
             )
         )
     }
