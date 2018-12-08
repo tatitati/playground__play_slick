@@ -1,5 +1,5 @@
 import com.google.inject.AbstractModule
-import App.Application.Speaker._
+import App.Application._
 
 class Module extends AbstractModule {
 	def configure() = {
