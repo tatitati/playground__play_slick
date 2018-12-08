@@ -56,8 +56,6 @@ import App.Application._
 @Singleton
 class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt) extends AbstractController(cc) {    
     .....
-
-
     
     def say = Action {
         Ok(
