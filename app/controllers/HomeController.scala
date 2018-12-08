@@ -1,13 +1,14 @@
 package controllers
 
-import Packages.Mymodule.{MyService, _}
+
 import javax.inject._
 import play.api._
 import play.api.mvc._
 import play.api.libs.json.Json
+import App.Application.Speaker._
 
 @Singleton
-class HomeController @Inject() (cc: ControllerComponents, myservice: MyService) extends AbstractController(cc) {
+class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt) extends AbstractController(cc) {
     case class User(val age: Int, val name: String)
 
     val listUsers = List(
