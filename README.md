@@ -93,3 +93,5 @@ class EnglishSpeaker() extends SpeakerInt
 	}
 }
 ```
+
+**TODO: Testing a controller with a service dynamically injected is failing, find out why**
