@@ -1,16 +1,13 @@
 package controllers
 
+import Packages.Mymodule.{MyService, _}
 import javax.inject._
 import play.api._
 import play.api.mvc._
 import play.api.libs.json.Json
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class HomeController @Inject() (cc: ControllerComponents, myservice: MyService) extends AbstractController(cc) {
     case class User(val age: Int, val name: String)
 
     val listUsers = List(
@@ -43,6 +40,13 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
             )
         )
     }
+
+    def say = Action {
+        Ok(
+            myservice.sayHello()
+        )
+    }
+
 
   /**
    * Create an Action to render an HTML page.
