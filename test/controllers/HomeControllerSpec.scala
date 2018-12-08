@@ -58,5 +58,13 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       status(home) mustBe OK
       contentType(home) mustBe Some("application/json")
     }
+
+    "/say ingest an spanish speaker" in {
+      val request = FakeRequest(GET, "/say")
+      val home = route(app, request).get
+
+      status(home) mustBe OK
+      contentAsString(home) must include ("Hola!!, soy un servicio injectado")
+    }
   }
 }
