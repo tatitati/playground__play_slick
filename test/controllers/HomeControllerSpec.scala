@@ -11,8 +11,7 @@ import App.Application._
 
 class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
 
-  "HomeController GET" should {
-
+  "/" should {
     "render the index page from a new instance of controller" in {
       val controller = new HomeController(
         cc = stubControllerComponents(),
@@ -47,8 +46,12 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       contentType(home) mustBe Some("text/html")
       contentAsString(home) must include ("Welcome to Play")
     }
+  }
 
-    "/hello display hello!!!!!!" in {
+
+
+  "/hello" should {
+    "display hello!!!!!!" in {
       val request = FakeRequest(GET, "/hello")
       val home = route(app, request).get
 
@@ -56,7 +59,11 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       contentType(home) mustBe Some("text/plain")
       contentAsString(home) must include ("hello!!!!!!")
     }
+  }
 
+
+
+  "/list" should {
     "/list display a json" in {
       val request = FakeRequest(GET, "/list")
       val home = route(app, request).get
@@ -64,7 +71,19 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       status(home) mustBe OK
       contentType(home) mustBe Some("application/json")
     }
+    
+    "/say ingest an spanish speaker" in {
+      val request = FakeRequest(GET, "/say")
+      val home = route(app, request).get
 
+      status(home) mustBe OK
+      contentAsString(home) must include ("Hola!!, soy un servicio injectado")
+    }
+  }
+
+
+
+  "/say" should {
     "/say ingest an spanish speaker" in {
       val request = FakeRequest(GET, "/say")
       val home = route(app, request).get
