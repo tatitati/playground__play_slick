@@ -10,8 +10,8 @@ GET     /detail     @controllers.HomeController.detail
 GET     /list       @controllers.HomeController.list
 
 # DI routes
-GET     /say        @controllers.HomeController.say
-GET     /sayenglish        @controllers.HomeController.sayenglish
+GET     /say            @controllers.HomeController.say
+GET     /sayenglish     @controllers.HomeController.sayenglish
 
 
 
