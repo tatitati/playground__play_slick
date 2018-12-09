@@ -61,7 +61,7 @@ class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt)
     
     def say = Action {
         Ok(
-            myservice.sayHello()
+            myservice.sayHello() // Hola!!, soy un servicio injectado
         )
     }
     
@@ -82,6 +82,19 @@ trait SpeakerInt {
 
 
 ```
+// app/application/SpanishSpeaker.scala
+
+package App.Application
+
+class SpanishSpeaker() extends SpeakerInt
+{
+	def sayHello(): String = {
+		s"Hola!!, soy un servicio injectado"
+	}
+}
+```
+
+```
 // app/application/EnglishSpeaker.scala
 
 package App.Application
@@ -94,4 +107,21 @@ class EnglishSpeaker() extends SpeakerInt
 }
 ```
 
+The previosu code is to map an interface to an specific implementation. however we can also inject an implementation directly with no mapping required as we are doing with EnglishSpeaker in this new code:
+
+```
+class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt, englishSpeaker: EnglishSpeaker) extends AbstractController(cc) {
+
+```
+
+This service injected can be used directly with:
+
+
+```
+    def sayenglish = Action {
+        Ok(
+            englishSpeaker.sayHello() // Hello im an injected service
+        )
+    }
+```
 **TODO: Testing a controller with a service dynamically injected is failing, find out why**
