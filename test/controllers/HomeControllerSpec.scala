@@ -6,7 +6,6 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
-import org.scalatest.FunSuite
 import App.Application._
 
 class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
@@ -71,7 +70,7 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       status(home) mustBe OK
       contentType(home) mustBe Some("application/json")
     }
-    
+
     "/say ingest an spanish speaker" in {
       val request = FakeRequest(GET, "/say")
       val home = route(app, request).get
