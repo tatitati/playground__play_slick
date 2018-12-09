@@ -7,7 +7,7 @@ import play.api.libs.json.Json
 import App.Application._
 
 @Singleton
-class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt) extends AbstractController(cc) {
+class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt, englishSpeaker: EnglishSpeaker) extends AbstractController(cc) {
     case class User(val age: Int, val name: String)
 
     val listUsers = List(
@@ -44,6 +44,12 @@ class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt)
     def say = Action {
         Ok(
             myservice.sayHello()
+        )
+    }
+
+    def sayenglish = Action {
+        Ok(
+            englishSpeaker.sayHello()
         )
     }
 
