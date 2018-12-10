@@ -1,4 +1,7 @@
-## Setup
+## Set up
+sbt reload updte
+
+## Run
 
 ```
 sbt run
