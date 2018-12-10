@@ -1,3 +1,8 @@
+# Research
+
+- [ ] How to execute Play evolutions without web UI?
+
+
 ## Set up
 sbt reload updte
 
@@ -129,4 +134,3 @@ This service injected can be used directly with:
         )
     }
 ```
-**TODO: Testing a controller with a service dynamically injected is failing, find out why**
