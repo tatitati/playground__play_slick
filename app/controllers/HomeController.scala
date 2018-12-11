@@ -5,6 +5,7 @@ import play.api._
 import play.api.mvc._
 import play.api.libs.json.Json
 import App.Application._
+import play.db.Database
 
 @Singleton
 class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt, englishSpeaker: EnglishSpeaker) extends AbstractController(cc) {
@@ -52,6 +53,11 @@ class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt,
             englishSpeaker.sayHello()
         )
     }
+
+//    def insert = Action {
+//        val dbConfig = Database.forDataSource(play.api.db.
+//        println(dbConfig)
+//    }
 
 
   /**
