@@ -1,4 +1,12 @@
-## Setup
+# Research
+
+- [ ] How to execute Play evolutions without web UI?
+
+
+## Set up
+sbt reload updte
+
+## Run
 
 ```
 sbt run
@@ -22,6 +30,7 @@ http://localhost:9000/detail
 http://localhost:9000/list
 
 http://localhost:9000/say  -> this route is using a service injected (DI)
+
 http://localhost:9000/sayenglish  -> this route is using a service injected (DI)
 
 
@@ -125,4 +134,3 @@ This service injected can be used directly with:
         )
     }
 ```
-**TODO: Testing a controller with a service dynamically injected is failing, find out why**
