@@ -11,8 +11,9 @@ routesGenerator := InjectedRoutesGenerator
 libraryDependencies += guice
 //  libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.21"
 libraryDependencies += "mysql" % "mysql-connector-java" % "latest.release"
-libraryDependencies += "com.typesafe.play" %% "play-slick" % "latest.release"
-libraryDependencies += "com.typesafe.play" %% "play-slick-evolutions" % "latest.release"
+libraryDependencies += "com.typesafe.play" %% "play-slick" % "3.0.0"
+libraryDependencies += "com.typesafe.play" %% "play-slick-evolutions" % "3.0.0"
+
 // Dev
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
 libraryDependencies += "org.mockito" % "mockito-all" % "1.8.4" % Test

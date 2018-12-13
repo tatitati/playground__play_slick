@@ -1,4 +1,8 @@
 package App.Domain
 
 
-case class User(id: Long, firstName: String, lastName: String, mobile: Long, email: String)
+case class User(
+                 var id: String,
+                 firstName: String,
+                 lastName: String
+               )

@@ -1,19 +1,29 @@
 package controllers
 
-import javax.inject._
-import play.api._
-import play.api.mvc._
-import play.api.libs.json.Json
 import App.Application._
-import play.db.Database
+import App.Domain.User
+import javax.inject._
+import play.api.db.slick.{DbName, SlickApi}
+import play.api.libs.json.Json
+import play.api.mvc._
+import infrastructure.user.UserDao
+
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt, englishSpeaker: EnglishSpeaker) extends AbstractController(cc) {
-    case class User(val age: Int, val name: String)
+class HomeController @Inject() (
+                                 cc: ControllerComponents,
+                                 myservice: SpeakerInt,
+                                 englishSpeaker: EnglishSpeaker,
+                                 slickApi: SlickApi,
+                                 userDao: UserDao
+                               ) (implicit executionContext: ExecutionContext) extends AbstractController(cc) {
+
+    case class Animal(val age: Int, val name: String)
 
     val listUsers = List(
-        User(32, "user1"),
-        User(45, "user2")
+        Animal(32, "user1"),
+        Animal(45, "user2")
     )
 
     val hello = Action {
@@ -54,13 +64,14 @@ class HomeController @Inject() (cc: ControllerComponents, myservice: SpeakerInt,
         )
     }
 
-//    def insert = Action {
-//        val dbConfig = Database.forDataSource(play.api.db.
-//        println(dbConfig)
-//    }
+    def insert = Action.async { implicit request =>
+        userDao.insert(
+            User("1", "firstnameeee", "lastnameeeee")
+        ).map(_ => Ok("done"))
+    }
 
 
-  /**
+    /**
    * Create an Action to render an HTML page.
    *
    * The configuration in the `routes` file means that this method
