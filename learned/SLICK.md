@@ -1,6 +1,7 @@
 /conf/evolutions/default/1.sql
 
-```# Users schema
+```sql
+# Users schema
 
 # --- !Ups
 
@@ -21,7 +22,7 @@ DROP TABLE User;
 infrastructure/user/userDao.scala
  > DAO (Database Access Object): is our "repository". The fight Repository vs DAO is fucking blur....
 
-```
+```scala
 package infrastructure.user
 
 import App.Domain.User
@@ -42,7 +43,8 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
 
 infrastructure/user/userTable.scala
 > This should be mapper........?
-```
+
+```scala
 package infrastructure.user
 
 import App.Domain._
