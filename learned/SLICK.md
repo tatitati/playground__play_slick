@@ -41,7 +41,7 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
 ```
 
 infrastructure/user/userTable.scala
-
+> This should be mapper........?
 ```
 package infrastructure.user
 
@@ -55,6 +55,7 @@ class UserTable(tag: Tag) extends Table[User](tag, "user") {
   val firstName = column[String]("first_name")
   val lastName = column[String]("last_name")
 
+  // MAPPING HERE FOR "select * from...."
   override def * =
     (id, firstName, lastName) <> (User.tupled, User.unapply)
 }
