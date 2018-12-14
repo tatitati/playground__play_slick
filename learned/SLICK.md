@@ -42,7 +42,7 @@ class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)
 ```
 
 infrastructure/user/userTable.scala
-> This should be mapper........?
+> Our Mapper.
 
 ```scala
 package infrastructure.user
