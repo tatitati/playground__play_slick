@@ -6,15 +6,23 @@ import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import App.Application._
+import infrastructure.user.UserDao
+import play.api.db.slick.SlickApi
+
+import scala.concurrent.ExecutionContext
 
 class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+
+  implicit val executionContext = ExecutionContext.global
 
   "/" should {
     "render the index page from a new instance of controller" in {
       val controller = new HomeController(
         cc = stubControllerComponents(),
         myservice = mock[SpeakerInt],
-        englishSpeaker = mock[EnglishSpeaker]
+        englishSpeaker = mock[EnglishSpeaker],
+        userDao = mock[UserDao],
+        slickApi = mock[SlickApi]
       )
       val home = controller.index().apply(FakeRequest(GET, "/"))
 
@@ -27,7 +35,9 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       val controller = new HomeController(
         cc = stubControllerComponents(),
         myservice = mock[SpeakerInt],
-        englishSpeaker = mock[EnglishSpeaker]
+        englishSpeaker = mock[EnglishSpeaker],
+        userDao = mock[UserDao],
+        slickApi = mock[SlickApi]
       )
       val home = controller.index().apply(FakeRequest(GET, "/"))
 

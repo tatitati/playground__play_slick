@@ -20,7 +20,6 @@ class HomeController @Inject() (
                                ) (implicit executionContext: ExecutionContext) extends AbstractController(cc) {
 
     case class Animal(val age: Int, val name: String)
-
     val listUsers = List(
         Animal(32, "user1"),
         Animal(45, "user2")
@@ -31,42 +30,33 @@ class HomeController @Inject() (
     }
 
     def detail = Action {
-        Ok(
-            Json.obj(
-                "id" -> 2323,
-                "name" -> "anyname"
-            )
-        )
+        Ok(Json.obj(
+            "id" -> 2323,
+            "name" -> "anyname"
+        ))
     }
 
     def list = Action {
-        Ok(
-            Json.arr(
-                listUsers.map(
-                    userItem => Json.obj(
-                        "age" -> userItem.age,
-                        "name" -> userItem.name
-                    )
+        Ok(Json.arr(
+            listUsers.map(
+                userItem => Json.obj(
+                    "age" -> userItem.age,
+                    "name" -> userItem.name
                 )
             )
-        )
+        ))
     }
 
     def say = Action {
-        Ok(
-            myservice.sayHello()
-        )
-    }
+        Ok(myservice.sayHello())}
 
     def sayenglish = Action {
-        Ok(
-            englishSpeaker.sayHello()
-        )
+        Ok(englishSpeaker.sayHello())
     }
 
     def insert = Action.async { implicit request =>
         userDao.insert(
-            User(1, "firstnameeee", "lastnameeeee")
+            User(2, "firstnameeee", "lastnameeeee")
         ).map(_ => Ok("done"))
     }
 
