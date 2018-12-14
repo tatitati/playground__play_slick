@@ -20,7 +20,7 @@ DROP TABLE User;
 
 
 infrastructure/user/userDao.scala
- > DAO (Database Access Object): is our "repository". The fight Repository vs DAO is fucking blur....
+ > DAO (Database Access Object): is our ~"repository"~
 
 ```scala
 package infrastructure.user
