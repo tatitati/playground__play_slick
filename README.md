@@ -48,5 +48,6 @@ http://localhost:9000/insert
 # Learned lessons
 
 
-[DI with Guice]
-[Slick]
+[DI with Guice](https://github.com/tatitati/play_slick_project/blob/master/learned/DI_GUIDE.md)
+
+[Slick](https://github.com/tatitati/play_slick_project/blob/master/learned/SLICK.md)
