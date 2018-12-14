@@ -4,7 +4,10 @@
 
 
 ## Set up
-sbt reload updte
+
+```
+sbt reload update
+```
 
 ## Run
 
