@@ -62,3 +62,21 @@ class UserTable(tag: Tag) extends Table[User](tag, "user") {
     (id, firstName, lastName) <> (User.tupled, User.unapply)
 }
 ```
+
+We use all this in our controller in the next way:
+
+```scala
+class HomeController @Inject() (
+                                 cc: ControllerComponents,
+                                 ....
+                                 slickApi: SlickApi,
+                                 userDao: UserDao
+                               ) (implicit executionContext: ExecutionContext) extends AbstractController(cc) {
+    ....
+    def insert = Action.async { implicit request =>
+        userDao.insert(
+            User("1", "firstnameeee", "lastnameeeee")
+        ).map(_ => Ok("done"))
+    }
+}
+```
