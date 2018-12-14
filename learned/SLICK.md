@@ -1,5 +1,6 @@
 /conf/evolutions/default/1.sql
 
+> Migration script (Evolutions)
 ```sql
 # Users schema
 
