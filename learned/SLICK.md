@@ -62,6 +62,20 @@ class UserTable(tag: Tag) extends Table[User](tag, "user") {
     (id, firstName, lastName) <> (User.tupled, User.unapply)
 }
 ```
+The previous file is a mapper. So all types need to match in both directions. In this case User case class is:
+domain/User.scala
+
+```scala
+package App.Domain
+
+
+case class User(
+                 var id: Long,
+                 firstName: String,
+                 lastName: String
+               )
+
+```
 
 We use all this in our controller in the next way:
 
