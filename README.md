@@ -35,9 +35,9 @@ http://localhost:9000/list
 
 **Using DI:**
 
-http://localhost:9000/say  -> this route is using a service injected (DI)
+http://localhost:9000/say  -> this route is using a service injected with Guice (DI)
 
-http://localhost:9000/sayenglish  -> this route is using a service injected (DI)
+http://localhost:9000/sayenglish  -> this route is using a service injected with Guice (DI)
 
 
 **Using slick:**
