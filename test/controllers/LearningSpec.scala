@@ -1,5 +1,6 @@
 package controllers
 
+import App.Domain.User
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.test._
