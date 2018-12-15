@@ -44,10 +44,3 @@ http://localhost:9000/sayenglish  -> this route is using a service injected with
 
 http://localhost:9000/insert
 
-
-# Learned lessons
-
-
-[DI with Guice](https://github.com/tatitati/play_slick_project/blob/master/learned/DI_GUIDE.md)
-
-[Slick](https://github.com/tatitati/play_slick_project/blob/master/learned/SLICK.md)
