@@ -9,8 +9,8 @@ routesGenerator := InjectedRoutesGenerator
 
 // Production
 libraryDependencies += guice
-//  libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.21"
-libraryDependencies += "mysql" % "mysql-connector-java" % "latest.release"
+libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.21"
+//libraryDependencies += "mysql" % "mysql-connector-java" % "latest.release"
 libraryDependencies += "com.typesafe.play" %% "play-slick" % "3.0.0"
 libraryDependencies += "com.typesafe.play" %% "play-slick-evolutions" % "3.0.0"
 
