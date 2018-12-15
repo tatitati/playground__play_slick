@@ -8,13 +8,9 @@ import org.scalatestplus.play.guice._
 import App.Application._
 import infrastructure.user.UserDao
 import play.api.db.slick.SlickApi
-
-import scala.concurrent.ExecutionContext
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
-
-  implicit val executionContext = ExecutionContext.global
-
   "/" should {
     "render the index page from a new instance of controller" in {
       val controller = new HomeController(
