@@ -15,7 +15,7 @@ import slick.lifted.TableQuery
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class LearningSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar with HasDatabaseConfigProvider[JdbcProfile] {
+class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar with HasDatabaseConfigProvider[JdbcProfile] {
   val myapp = new GuiceApplicationBuilder()
     .configure(Configuration.from(
       Map(
