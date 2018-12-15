@@ -8,7 +8,6 @@ import play.api.Configuration
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class UserDaoSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
