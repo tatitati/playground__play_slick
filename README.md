@@ -2,7 +2,8 @@
 
 # Research
 
-- [ ] How to execute Play evolutions without web UI?
+- [ ] How to execute Play evolutions without web UI? -> useful for build-travis
+- [ ] How to run before/after (setUp/teardDOwn) with ScalaTest?
 
 
 ## Set up
