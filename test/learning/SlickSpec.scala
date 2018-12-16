@@ -1,40 +1,24 @@
 package learning
 
-import App.Domain.User
 import infrastructure.user.UserTable
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
-import play.api.{Configuration, Play}
-import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
-import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.Play
+import play.api.db.slick.DatabaseConfigProvider
 import play.api.test._
-import play.db.Database
 import slick.jdbc.JdbcProfile
-import slick.lifted
-import slick.lifted.TableQuery
-
-import scala.concurrent.ExecutionContext.Implicits.global
+import slick.lifted.{TableQuery}
+import slick.jdbc.PostgresProfile.api._
 
 class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
-  "UserDao" should {
-    "Create tablequery" in {
-      val userTable = lifted.TableQuery[UserTable]
-      assert(userTable.isInstanceOf[TableQuery[UserTable]])
-    }
+  "Slick" should {
+    "can select all" in {
+      val userTable = TableQuery[UserTable]
+      val action = userTable.result
 
-    "Play can instert one row" in {
-
-      Database.forConfig("mysql.dev")
-
-//      val user = User(6, "asdfasdf", "asdfadsfadsfasdfadsfad")
-//
-//      val userTable = lifted.TableQuery[UserTable]
-//
-//      dbConfig.db.run(userTable.result)
-      //      val db = Database.forConfig("default")
-      //
-      //      db.run(table += user).map { _ => () }
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      val rows = db.run(action)
     }
   }
 
