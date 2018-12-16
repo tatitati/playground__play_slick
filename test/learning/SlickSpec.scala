@@ -18,11 +18,11 @@ import scala.concurrent.{Await, Future}
 class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
   "Slick" should {
     "can select all" in {
-      val userTable = TableQuery[UserTable]
-      val action = userTable.result
-
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
       assert(db.isInstanceOf[DatabaseDef])
+
+      val userTable = TableQuery[UserTable]
+      val action = userTable.result
 
       val future = db.run(action)
       assert(future.isInstanceOf[Future[User]])
@@ -32,18 +32,21 @@ class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
       assert(rows.size === 1)
     }
 
-//    "can insert one row" in {
-//      val userTable = TableQuery[UserTable]
-//      val action = userTable.result
-//
-//      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-//      val future = db.run(action)
-//
-//      val rows = Await.result(future, 2.seconds)
-//
-//
-//      assert(rows.isInstanceOf[Vector[User]])
-//      assert(rows.size === 1)
-//    }
+    "can insert one row" in {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+
+      val newusers = Seq(
+        User(7, "aaaaaa", "bbbbb"),
+        User(8, "cccccc", "ddddd")
+      )
+
+      val userTable = TableQuery[UserTable]
+      val action = userTable ++= newusers
+      val future = db.run(action)
+
+      val rows = Await.result(future, 2.seconds)
+
+      assert(rows == Some(2))
+    }
   }
 }
