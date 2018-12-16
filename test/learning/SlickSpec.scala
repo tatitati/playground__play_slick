@@ -42,11 +42,15 @@ class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
 
       val userTable = TableQuery[UserTable]
       val action = userTable ++= newusers
-      val future = db.run(action)
 
+      val future = db.run(action)
       val rows = Await.result(future, 2.seconds)
 
       assert(rows == Some(2))
+    }
+
+    "can delete all rows" in {
+
     }
   }
 }
