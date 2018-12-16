@@ -6,9 +6,10 @@ import scala.concurrent.{ExecutionContext, Future}
 import javax.inject.Inject
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
+import play.db.NamedDatabase
 import slick.jdbc.JdbcProfile
 
-class UserDao @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
+class UserDao @Inject() (@NamedDatabase("mydb") protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
   import profile.api._
   private val table = TableQuery[UserTable]
 
