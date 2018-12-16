@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tatitati/play_slick_project.svg?branch=master)](https://travis-ci.org/tatitati/play_slick_project)
+
 # Research
 
 - [ ] How to execute Play evolutions without web UI?
