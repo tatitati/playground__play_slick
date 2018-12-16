@@ -8,12 +8,12 @@ import org.scalatestplus.play.guice._
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.test._
-import slick.jdbc.{JdbcActionComponent, JdbcProfile}
+import slick.jdbc.JdbcProfile
 import slick.lifted.TableQuery
 import slick.jdbc.MySQLProfile.api._
-
+import slick.jdbc.JdbcBackend._
 import scala.concurrent.duration._
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future}
 
 class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
   "Slick" should {
@@ -22,30 +22,28 @@ class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
       val action = userTable.result
 
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      assert(db.isInstanceOf[DatabaseDef])
+
       val future = db.run(action)
+      assert(future.isInstanceOf[Future[User]])
 
       val rows = Await.result(future, 2.seconds)
-
-
       assert(rows.isInstanceOf[Vector[User]])
       assert(rows.size === 1)
     }
-  }
 
-//  val dbConfigProvider = myapp.injector.instanceOf[DatabaseConfigProvider]
+//    "can insert one row" in {
+//      val userTable = TableQuery[UserTable]
+//      val action = userTable.result
 //
-//  "UserDao" should {
-//    "Play can instert one row" in {
-//      import profile.api._
+//      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+//      val future = db.run(action)
 //
-//      val table = lifted.TableQuery[UserTable]
+//      val rows = Await.result(future, 2.seconds)
 //
-//      val user = User(6, "asdfasdf", "asdfadsfadsfasdfadsfad")
-//      val db = Database.forConfig("default")
 //
-//      db.run(table += user).map { _ => () }
+//      assert(rows.isInstanceOf[Vector[User]])
+//      assert(rows.size === 1)
 //    }
-//  }
-
-
+  }
 }
