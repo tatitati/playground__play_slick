@@ -5,14 +5,9 @@ import infrastructure.user.UserTable
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
-import play.api.Play
-import play.api.db.slick.DatabaseConfigProvider
 import play.api.test._
-import slick.jdbc.JdbcProfile
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
-import scala.concurrent.Await
-import scala.concurrent.duration._
 
 class SlickActionSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
   val userTable = TableQuery[UserTable]
