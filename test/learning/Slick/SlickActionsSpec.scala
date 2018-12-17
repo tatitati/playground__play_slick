@@ -64,13 +64,24 @@ class SlickActionsSpec extends PlaySpec with GuiceOneAppPerTest with Injecting w
       assert(rows.size === 3)
     }
 
-//    "can combine actions" in {
-//      val actionsCombined = (
-//        userTable.schema.create andThen
-//
-//
-//      )
-//    }
+    "can combine actions" in {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+
+      var actionsCombined = (
+        (userTable += User(20, "gggggg", "hhhhhh")) andThen
+        (userTable += User(21, "iiiiii", "jjjjjj")) andThen
+        (userTable += User(22, "kkkkkk", "llllll"))
+      )
+      val future1 = db.run(actionsCombined)
+      val rows1 = Await.result(future1, 2.seconds)
+      assert(rows1 == 1)
+
+
+      val action = userTable.result
+      val future2 = db.run(action)
+      val rows2 = Await.result(future2, 2.seconds)
+      assert(rows2.size === 6)
+    }
 
     "can  delete all" in  {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
