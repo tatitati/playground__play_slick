@@ -1,4 +1,4 @@
-package learning
+package learning.Slick
 
 import App.Domain.User
 import infrastructure.user.UserTable
@@ -8,14 +8,16 @@ import org.scalatestplus.play.guice._
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.test._
-import slick.jdbc.JdbcProfile
-import slick.lifted.TableQuery
-import slick.jdbc.MySQLProfile.api._
 import slick.jdbc.JdbcBackend._
+import slick.jdbc.JdbcProfile
+import slick.jdbc.MySQLProfile.api._
+import slick.lifted.TableQuery
+
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
 class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+
   "Slick" should {
     "can delete all rows" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
@@ -55,6 +57,25 @@ class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
       val rows = Await.result(future, 2.seconds)
       assert(rows.isInstanceOf[Vector[User]])
       assert(rows.size === 2)
+    }
+
+    "can get sql query string" in {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      assert(db.isInstanceOf[DatabaseDef])
+
+      val userTable = TableQuery[UserTable]
+      val action = userTable.result
+
+      assert(List("select `id`, `first_name`, `last_name` from `user`") === action.statements)
+      assert(Some("select `id`, `first_name`, `last_name` from `user`") === action.statements.headOption)
+    }
+
+    "can  delete all" in  {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      val userTable = TableQuery[UserTable]
+      val action = userTable.delete
+      val future = db.run(action)
+      Await.result(future, 2.seconds)
     }
   }
 }
