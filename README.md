@@ -1,9 +1,17 @@
 [![Build Status](https://travis-ci.org/tatitati/play_slick_project.svg?branch=master)](https://travis-ci.org/tatitati/play_slick_project)
 
+
+
+![Build history](https://buildstats.info/travisci/chart/tatitati/play_slick_project?branch=master)
 # Research
 
-- [ ] How to execute Play evolutions without web UI?
-
+- [ ] How to execute Play evolutions without web UI? -> useful for build-travis
+- [ ] How to run before/after (setUp/teardDOwn) with ScalaTest?
+- [ ] Run plain sql with slick
+- [ ] Select only some fields, not all
+- [ ] Slick mapping types (like DateTime)
+- [ ] Create test database 
+- [ ] Execute sequence of queries (atomic transactions)
 
 ## Set up
 
