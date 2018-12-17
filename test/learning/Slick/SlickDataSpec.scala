@@ -15,7 +15,7 @@ import slick.lifted.TableQuery
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-class SlickActionsSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+class SlickDataSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
   val userTable = TableQuery[UserTable]
 
   "Slick" should {
@@ -66,7 +66,6 @@ class SlickActionsSpec extends PlaySpec with GuiceOneAppPerTest with Injecting w
 
     "can combine actions" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-
       var actionsCombined = (
         (userTable += User(20, "gggggg", "hhhhhh")) andThen
         (userTable += User(21, "iiiiii", "jjjjjj")) andThen
@@ -90,5 +89,12 @@ class SlickActionsSpec extends PlaySpec with GuiceOneAppPerTest with Injecting w
       val future = db.run(action)
       Await.result(future, 2.seconds)
     }
+  }
+
+  private def exec(action: DBIO[Unit]) =
+  {
+    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    val future = db.run(action)
+    Await.result(future, 2.seconds)
   }
 }
