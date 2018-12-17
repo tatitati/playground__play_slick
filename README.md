@@ -7,9 +7,10 @@
 
 - [ ] How to execute Play evolutions without web UI? -> useful for build-travis
 - [ ] How to run before/after (setUp/teardDOwn) with ScalaTest?
-- [ ] Run play sql with slick
+- [ ] Run plain sql with slick
 - [ ] Select only some fields, not all
 - [ ] Slick mapping types (like DateTime)
+- [ ] Create test database 
 
 
 ## Set up
