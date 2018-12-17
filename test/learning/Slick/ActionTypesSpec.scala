@@ -9,7 +9,7 @@ import play.api.test._
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
 
-class SlickActionSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+class ActionTypesSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
   val userTable = TableQuery[UserTable]
 
   "Slick" should {

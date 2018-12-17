@@ -15,7 +15,7 @@ import slick.lifted.TableQuery
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-class SlickDataSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+class DataSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
   val userTable = TableQuery[UserTable]
 
   "Slick" should {
