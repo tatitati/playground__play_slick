@@ -53,11 +53,4 @@ class SlickActionSpec extends PlaySpec with GuiceOneAppPerTest with Injecting wi
       val action = userTable.delete
     }
   }
-
-  private def exec(action: DBIO[Unit]) =
-  {
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-    val future = db.run(action)
-    Await.result(future, 2.seconds)
-  }
 }
