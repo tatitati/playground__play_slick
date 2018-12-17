@@ -11,7 +11,6 @@
 - [ ] Select only some fields, not all
 - [ ] Slick mapping types (like DateTime)
 - [ ] Create test database 
-- [ ] Execute sequence of queries (atomic transactions)
 
 ## Set up
 
