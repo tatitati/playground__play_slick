@@ -84,7 +84,6 @@ class SlickDataSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with
 
     "can  delete all" in  {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      val userTable = TableQuery[UserTable]
       val action = userTable.delete
       val future = db.run(action)
       Await.result(future, 2.seconds)
