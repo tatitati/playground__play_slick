@@ -12,22 +12,31 @@ import slick.jdbc.JdbcBackend._
 import slick.jdbc.JdbcProfile
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
-
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+class SlickActionsSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+  val userTable = TableQuery[UserTable]
 
   "Slick" should {
     "can delete all rows" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      val userTable = TableQuery[UserTable]
       val action = userTable.delete
       val future = db.run(action)
       Await.result(future, 2.seconds)
     }
 
-    "can insert two rows" in {
+    "can insert a simngle row" in {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+
+      val action = userTable += User(9, "eeeeee", "ffffff")
+      val future = db.run(action)
+      val rows = Await.result(future, 2.seconds)
+
+      assert(rows == 1)
+    }
+
+    "can insert two rows: Way 1" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
 
       val newusers = Seq(
@@ -35,9 +44,7 @@ class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
         User(8, "cccccc", "ddddd")
       )
 
-      val userTable = TableQuery[UserTable]
       val action = userTable ++= newusers
-
       val future = db.run(action)
       val rows = Await.result(future, 2.seconds)
 
@@ -48,27 +55,22 @@ class SlickSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
       assert(db.isInstanceOf[DatabaseDef])
 
-      val userTable = TableQuery[UserTable]
       val action = userTable.result
-
       val future = db.run(action)
       assert(future.isInstanceOf[Future[User]])
 
       val rows = Await.result(future, 2.seconds)
       assert(rows.isInstanceOf[Vector[User]])
-      assert(rows.size === 2)
+      assert(rows.size === 3)
     }
 
-    "can get sql query string" in {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      assert(db.isInstanceOf[DatabaseDef])
-
-      val userTable = TableQuery[UserTable]
-      val action = userTable.result
-
-      assert(List("select `id`, `first_name`, `last_name` from `user`") === action.statements)
-      assert(Some("select `id`, `first_name`, `last_name` from `user`") === action.statements.headOption)
-    }
+//    "can combine actions" in {
+//      val actionsCombined = (
+//        userTable.schema.create andThen
+//
+//
+//      )
+//    }
 
     "can  delete all" in  {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
