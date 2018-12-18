@@ -1,6 +1,14 @@
 
-
+Scala:
 [![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/explore/tags/curated:scala,scala)
+
+Slick
+[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/slick/slick)
+
+Play:
+[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/playframework/playframework)
+
+
 [![Build Status](https://travis-ci.org/tatitati/play_slick_project.svg?branch=master)](https://travis-ci.org/tatitati/play_slick_project)
 
 
