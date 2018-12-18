@@ -1,13 +1,3 @@
-
-[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/explore/tags/curated:scala,scala) => Scala
-
-[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/slick/slick) => Slick
-
-
-[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/playframework/playframework)
-=> Play
-
-
 [![Build Status](https://travis-ci.org/tatitati/play_slick_project.svg?branch=master)](https://travis-ci.org/tatitati/play_slick_project)
 
 
@@ -62,4 +52,14 @@ http://localhost:9000/sayenglish  -> this route is using a service injected with
 **Using slick:**
 
 http://localhost:9000/insert
+
+
+# Gitter:
+[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/explore/tags/curated:scala,scala) => Scala
+
+[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/slick/slick) => Slick
+
+
+[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/playframework/playframework)
+=> Play
 
