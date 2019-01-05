@@ -58,6 +58,7 @@ http://localhost:9000/sayenglish  -> this route is using a service injected with
 
 **Using slick:**
 
+http://localhost:9000/create-db   -> play is so shit that only can create the db once is running through the UI (shame)
 http://localhost:9000/insert
 
 
