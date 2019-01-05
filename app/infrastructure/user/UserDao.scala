@@ -17,11 +17,16 @@ class UserDao @Inject() (@NamedDatabase("mydb") protected val dbConfigProvider: 
     db.run(table += user).map { _ => () }
   }
 
-  def createSchemaAction = table.schema.create
-  def dropSchemaAction = table.schema.drop
+  def createSchemaAction = {
+    db.run(table.schema.create)
+  }
+
+  def dropSchemaAction = {
+    db.run(table.schema.drop)
+  }
 
   def createDatabase = {
-    db.run(createSchemaAction)
+    createSchemaAction
     db.run(
       DBIO.seq(
         table += User(101, "Acme, Inc.", "99 Market Street"),
