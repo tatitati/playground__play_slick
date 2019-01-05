@@ -3,7 +3,6 @@
 
 
 ![Build history](https://buildstats.info/travisci/chart/tatitati/play_slick_project?branch=master)
-# Research
 
 ### Notes:
 1- The code is broken. Since we introduced DI with GUICE evolutions doesnt work. This is because there is a different approach as it is pointed in the doc:
@@ -11,6 +10,7 @@ https://www.playframework.com/documentation/2.6.x/PlaySlick#databaseconfig-via-r
 
 2- There is no way of running evolutions by command line. This is a very big fucking shame
 
+# Research
 
 - [ ] How to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
 - [x] ~Run plain sql with slick~
