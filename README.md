@@ -6,7 +6,7 @@
 # Research
 
 - [ ] How to execute Play evolutions without web UI? -> useful for build-travis
-- [ ] How to run before/after (setUp/teardDOwn) with ScalaTest?
+- [ ] How to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
 - [ ] Run plain sql with slick
 - [ ] Select only some fields, not all
 - [ ] Slick mapping types (like DateTime)
