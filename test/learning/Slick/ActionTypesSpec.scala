@@ -1,7 +1,7 @@
 package learning.Slick
 
 import App.Domain.User
-import infrastructure.user.UserTable
+import infrastructure.user.UserSchema
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
@@ -10,7 +10,7 @@ import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
 
 class ActionTypesSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
-  val userTable = TableQuery[UserTable]
+  val userTable = TableQuery[UserSchema]
 
   "Slick" should {
     "can delete all rows" in {

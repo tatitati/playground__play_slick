@@ -1,7 +1,7 @@
 package learning.Slick
 
 import App.Domain.User
-import infrastructure.user.UserTable
+import infrastructure.user.UserSchema
 import org.scalatest.FlatSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.Play
@@ -15,7 +15,7 @@ import scala.concurrent.Await
 import slick.jdbc.MySQLProfile.api._
 
 class RunPlainSqlSpec extends FlatSpec with GuiceOneAppPerTest with Injecting {
-  val userTable = TableQuery[UserTable]
+  val userTable = TableQuery[UserSchema]
 
 
   "Slick" should "run plain sql queries" in {

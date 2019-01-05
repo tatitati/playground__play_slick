@@ -1,6 +1,6 @@
 package learning.Slick
 
-import infrastructure.user.UserTable
+import infrastructure.user.UserSchema
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
@@ -9,7 +9,7 @@ import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
 
 class StatementsSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
-  val userTable = TableQuery[UserTable]
+  val userTable = TableQuery[UserSchema]
 
   "Slick" should {
     "Statements represent the SQL query" in {

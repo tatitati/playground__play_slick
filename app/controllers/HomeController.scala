@@ -8,6 +8,7 @@ import play.api.libs.json.Json
 import play.api.mvc._
 import infrastructure.user.UserDao
 import scala.concurrent.{ExecutionContext, Future}
+import slick.jdbc.MySQLProfile.api._
 
 @Singleton
 class HomeController @Inject() (
@@ -59,6 +60,10 @@ class HomeController @Inject() (
         ).map(_ => Ok("done"))
     }
 
+    def createdb = Action {
+        userDao.createDatabase
+        Ok("done")
+    }
 
     /**
    * Create an Action to render an HTML page.

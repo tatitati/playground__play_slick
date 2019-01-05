@@ -4,7 +4,7 @@ import App.Domain._
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.Tag
 
-class UserTable(tag: Tag) extends Table[User](tag, "user") {
+class UserSchema(tag: Tag) extends Table[User](tag, "user") {
 
   def id = column[Long]("id", O.PrimaryKey)
   def firstName = column[String]("first_name")
