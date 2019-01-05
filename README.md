@@ -6,11 +6,12 @@
 # Research
 
 - [ ] How to execute Play evolutions without web UI? -> useful for build-travis
-- [ ] How to run before/after (setUp/teardDOwn) with ScalaTest?
+- [ ] How to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
 - [ ] Run plain sql with slick
 - [ ] Select only some fields, not all
 - [ ] Slick mapping types (like DateTime)
 - [ ] Create test database 
+- [ ] Investigate .env files
 
 ## Set up
 
@@ -52,4 +53,14 @@ http://localhost:9000/sayenglish  -> this route is using a service injected with
 **Using slick:**
 
 http://localhost:9000/insert
+
+
+# Gitter:
+[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/explore/tags/curated:scala,scala) => Scala
+
+[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/slick/slick) => Slick
+
+
+[![Join the chat in Scala](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/playframework/playframework)
+=> Play
 
