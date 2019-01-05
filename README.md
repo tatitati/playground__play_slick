@@ -11,6 +11,7 @@
 - [ ] Select only some fields, not all
 - [ ] Slick mapping types (like DateTime)
 - [ ] Create test database 
+- [ ] Investigate .env files
 
 ## Set up
 
