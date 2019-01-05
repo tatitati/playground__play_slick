@@ -3,12 +3,18 @@
 
 
 ![Build history](https://buildstats.info/travisci/chart/tatitati/play_slick_project?branch=master)
+
+### Notes:
+1- The code is broken. Since we introduced DI with GUICE evolutions doesnt work. This is because there is a different approach as it is pointed in the doc:
+https://www.playframework.com/documentation/2.6.x/PlaySlick#databaseconfig-via-runtime-dependency-injection
+
+2- There is no way of running evolutions by command line. This is a very big fucking shame
+
 # Research
 
-- [ ] How to execute Play evolutions without web UI? -> useful for build-travis
 - [ ] How to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
-- [ ] Run plain sql with slick
-- [ ] Select only some fields, not all
+- [x] ~Run plain sql with slick~
+- [x] ~Select only some fields, not all~
 - [ ] Slick mapping types (like DateTime)
 - [ ] Create test database 
 - [ ] Investigate .env files
@@ -52,6 +58,7 @@ http://localhost:9000/sayenglish  -> this route is using a service injected with
 
 **Using slick:**
 
+http://localhost:9000/create-db   -> play is so shit that only can create the db once is running through the UI (shame)
 http://localhost:9000/insert
 
 
