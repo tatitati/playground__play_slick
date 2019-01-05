@@ -19,7 +19,7 @@ class CombineActionsSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
 
   "Slick" should {
     "can combine actions" in {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      var db = cleanDb()
       var actionsCombined = (
         (userTable += User(20, "gggggg", "hhhhhh")) andThen
           (userTable += User(21, "iiiiii", "jjjjjj")) andThen
@@ -34,14 +34,14 @@ class CombineActionsSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       val future2 = db.run(action)
       val rows2 = Await.result(future2, 2.seconds)
       assert(rows2.size === 3)
-
-      cleanDb(DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db)
     }
   }
 
-  private def cleanDb(db: JdbcProfile#Backend#Database) = {
-      val action = userTable.delete
-      val future = db.run(action)
-      Await.result(future, 2.seconds)
+  private def cleanDb(): JdbcProfile#Backend#Database = {
+    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    val action = userTable.delete
+    val future = db.run(action)
+    Await.result(future, 2.seconds)
+    db
   }
 }
