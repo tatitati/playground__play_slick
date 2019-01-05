@@ -5,7 +5,13 @@
 ![Build history](https://buildstats.info/travisci/chart/tatitati/play_slick_project?branch=master)
 # Research
 
-- [ ] How to execute Play evolutions without web UI? -> useful for build-travis
+### Notes:
+1- The code is broken. Since we introduced DI with GUICE evolutions doesnt work. This is because there is a different approach as it is pointed in the doc:
+https://www.playframework.com/documentation/2.6.x/PlaySlick#databaseconfig-via-runtime-dependency-injection
+
+2- There is no way of running evolutions by command line. This is a very big fucking shame
+
+
 - [ ] How to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
 - [x] ~Run plain sql with slick~
 - [x] ~Select only some fields, not all~
