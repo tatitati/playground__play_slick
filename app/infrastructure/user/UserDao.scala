@@ -7,18 +7,18 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import play.db.NamedDatabase
 import slick.jdbc.JdbcProfile
+import slick.jdbc.MySQLProfile.api._
+
+class UserDao @Inject() (
+                          @NamedDatabase("mydb") protected val dbConfigProvider: DatabaseConfigProvider,
+                          executionContext: ExecutionContext
+                        ) extends HasDatabaseConfigProvider[JdbcProfile] {
 
 
-class UserDao @Inject()
-                        (@NamedDatabase("mydb") protected val dbConfigProvider: DatabaseConfigProvider)
-                        (implicit executionContext: ExecutionContext)
-                        extends HasDatabaseConfigProvider[JdbcProfile] {
-
-  import profile.api._
   private val table = TableQuery[UserSchema]
 
   def insert(user: User): Future[Unit] = {
-    db.run(table += user).map { _ => () }
+    db.run(table += user).map{ _ => () }(executionContext)
   }
 
   def dropSchemaAction = {
