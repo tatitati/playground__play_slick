@@ -9,7 +9,11 @@ import play.api.db.slick.HasDatabaseConfigProvider
 import play.db.NamedDatabase
 import slick.jdbc.JdbcProfile
 
-class UserDao @Inject() (@NamedDatabase("mydb") protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
+class UserDao @Inject()
+                        (@NamedDatabase("mydb") protected val dbConfigProvider: DatabaseConfigProvider)
+                        (implicit executionContext: ExecutionContext)
+                        extends HasDatabaseConfigProvider[JdbcProfile] {
+
   import profile.api._
   private val table = TableQuery[UserSchema]
 
@@ -17,16 +21,12 @@ class UserDao @Inject() (@NamedDatabase("mydb") protected val dbConfigProvider: 
     db.run(table += user).map { _ => () }
   }
 
-  def createSchemaAction = {
-    db.run(table.schema.create)
-  }
-
   def dropSchemaAction = {
     db.run(table.schema.drop)
   }
 
   def createDatabase = {
-    createSchemaAction
+    db.run(table.schema.create)
     db.run(
       DBIO.seq(
         table += User(101, "Acme, Inc.", "99 Market Street"),

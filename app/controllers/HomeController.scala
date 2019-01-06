@@ -13,7 +13,7 @@ import slick.jdbc.MySQLProfile.api._
 @Singleton
 class HomeController @Inject() (
                                  cc: ControllerComponents,
-                                 myservice: SpeakerInt,
+                                 myservice: SpeakerInt, // DI here
                                  englishSpeaker: EnglishSpeaker,
                                  slickApi: SlickApi,
                                  userDao: UserDao
