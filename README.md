@@ -16,7 +16,7 @@ https://www.playframework.com/documentation/2.6.x/PlaySlick#databaseconfig-via-r
 - [x] ~Run plain sql with slick~
 - [x] ~Select only some fields, not all~
 - [ ] Slick mapping types (like DateTime)
-- [ ] Create test database 
+- [ ] **Create test database**
 - [ ] Investigate .env files
 
 ## Set up
