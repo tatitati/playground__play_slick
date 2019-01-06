@@ -10,10 +10,14 @@ import infrastructure.user.UserDao
 import scala.concurrent.{ExecutionContext, Future}
 import slick.jdbc.MySQLProfile.api._
 
+
+
 @Singleton
 class HomeController @Inject() (
+                                 // the @inject notation inect all these params, ALL of them, not only the binded in Module.scala.
+                                 // For example, if I delete @inject and the binded one, the app still crashes, as it cannot inject the rest of parameters
                                  cc: ControllerComponents,
-                                 myservice: SpeakerInt, // DI here
+                                 myservice: SpeakerInt, // DI Binded
                                  englishSpeaker: EnglishSpeaker,
                                  slickApi: SlickApi,
                                  userDao: UserDao
@@ -48,7 +52,8 @@ class HomeController @Inject() (
     }
 
     def say = Action {
-        Ok(myservice.sayHello())}
+        Ok(myservice.sayHello())
+    }
 
     def sayenglish = Action {
         Ok(englishSpeaker.sayHello())
