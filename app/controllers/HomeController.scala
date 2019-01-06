@@ -19,7 +19,7 @@ class HomeController @Inject() (
                                  englishSpeaker: EnglishSpeaker,
                                  slickApi: SlickApi,
                                  userDao: UserDao
-                               ) (implicit executionContext: ExecutionContext) extends AbstractController(cc) {
+                               ) (executionContext: ExecutionContext) extends AbstractController(cc) {
 
     case class Animal(val age: Int, val name: String)
     val listUsers = List(
@@ -64,7 +64,7 @@ class HomeController @Inject() (
     def insert = Action.async { implicit request =>
         userDao.insert(
             User(2, "firstnameeee", "lastnameeeee")
-        ).map(_ => Ok("done"))
+        ).map(_ => Ok("done"))(executionContext)
     }
 
     def createdb = Action {
