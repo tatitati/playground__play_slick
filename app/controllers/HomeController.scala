@@ -10,7 +10,6 @@ import infrastructure.user.UserDao
 import scala.concurrent.{ExecutionContext, Future}
 
 
-@Singleton
 class HomeController @Inject() (
                                  // the @inject notation inect all these params, ALL of them, not only the binded in Module.scala.
                                  // For example, if I delete @inject and the binded one, the app still crashes, as it cannot inject the rest of parameters
