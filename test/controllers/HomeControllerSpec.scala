@@ -5,9 +5,10 @@ import play.api.test.Helpers._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
-import App.Application._
+import application.Speaker.{EnglishSpeaker, SpeakerInt, WorkerInt}
 import infrastructure.user.UserDao
 import play.api.db.slick.SlickApi
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
@@ -15,7 +16,8 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
     "render the index page from a new instance of controller" in {
       val controller = new HomeController(
         cc = stubControllerComponents(),
-        myservice = mock[SpeakerInt],
+        injectedSpeaker = mock[SpeakerInt],
+        injectedWorker = mock[WorkerInt],
         englishSpeaker = mock[EnglishSpeaker],
         userDao = mock[UserDao],
         slickApi = mock[SlickApi]
@@ -30,8 +32,9 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
     "render the index page from the application" in {
       val controller = new HomeController(
         cc = stubControllerComponents(),
-        myservice = mock[SpeakerInt],
+        injectedSpeaker = mock[SpeakerInt],
         englishSpeaker = mock[EnglishSpeaker],
+        injectedWorker = mock[WorkerInt],
         userDao = mock[UserDao],
         slickApi = mock[SlickApi]
       )

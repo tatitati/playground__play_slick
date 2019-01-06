@@ -1,10 +1,13 @@
+import application.Speaker.WorkerInt
+import application.Worker.TeacherWorker
 import com.google.inject.AbstractModule
-import App.Application._
+
 
 class Module extends AbstractModule {
+
+	// this injection is done with pragmatic binding. You can see the "binding annotation style" in SpeakerInt.scala
 	def configure() = {
-		bind(
-			classOf[SpeakerInt])
-			.to(classOf[SpanishSpeaker])
+		bind(classOf[WorkerInt])
+			.to(classOf[TeacherWorker])
 	}
 }

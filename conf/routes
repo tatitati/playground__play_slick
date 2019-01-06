@@ -10,7 +10,8 @@ GET     /detail             controllers.HomeController.detail
 GET     /list               controllers.HomeController.list
 
 # DI routes
-GET     /say                controllers.HomeController.say
+GET     /speaker            controllers.HomeController.speak_injectedspeaker
+GET     /worker             controllers.HomeController.speak_injectedworker
 GET     /sayenglish         controllers.HomeController.sayenglish
 
 # Slick

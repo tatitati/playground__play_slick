@@ -1,7 +1,7 @@
 package controllers
 
-import App.Application._
 import App.Domain.User
+import application.Speaker._
 import javax.inject._
 import play.api.db.slick.{DbName, SlickApi}
 import play.api.libs.json.Json
@@ -14,7 +14,8 @@ class HomeController @Inject() (
                                  // the @inject notation inect all these params, ALL of them, not only the binded in Module.scala.
                                  // For example, if I delete @inject and the binded one, the app still crashes, as it cannot inject the rest of parameters
                                  cc: ControllerComponents,
-                                 myservice: SpeakerInt, // DI Binded
+                                 injectedSpeaker: SpeakerInt, // DI Binded with "binding annotations"
+                                 injectedWorker: WorkerInt,   // DI Binded with "pragmatic binding"
                                  englishSpeaker: EnglishSpeaker,
                                  slickApi: SlickApi,
                                  userDao: UserDao
@@ -48,8 +49,12 @@ class HomeController @Inject() (
         ))
     }
 
-    def say = Action {
-        Ok(myservice.sayHello())
+    def speak_injectedspeaker = Action {
+        Ok(injectedSpeaker.sayHello())
+    }
+
+    def speak_injectedworker = Action {
+        Ok(injectedWorker.sayWork())
     }
 
     def sayenglish = Action {
