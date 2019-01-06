@@ -25,7 +25,7 @@ class UserDaoSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with M
     ).build()
 
   val dbConfigProvider = myapp.injector.instanceOf[DatabaseConfigProvider]
-  val userDao = new UserDao(dbConfigProvider)
+  val userDao = new UserDao(dbConfigProvider, global)
 
   "UserDao" should {
     "Play can inster one row" in {

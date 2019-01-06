@@ -18,8 +18,9 @@ class HomeController @Inject() (
                                  injectedWorker: WorkerInt,   // DI Binded with "pragmatic binding"
                                  englishSpeaker: EnglishSpeaker,
                                  slickApi: SlickApi,
-                                 userDao: UserDao
-                               ) (executionContext: ExecutionContext) extends AbstractController(cc) {
+                                 userDao: UserDao,
+                                 executionContext: ExecutionContext
+                               ) extends AbstractController(cc) {
 
     case class Animal(val age: Int, val name: String)
     val listUsers = List(

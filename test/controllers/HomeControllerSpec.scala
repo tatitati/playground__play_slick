@@ -19,8 +19,9 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
         injectedSpeaker = mock[SpeakerInt],
         injectedWorker = mock[WorkerInt],
         englishSpeaker = mock[EnglishSpeaker],
+        slickApi = mock[SlickApi],
         userDao = mock[UserDao],
-        slickApi = mock[SlickApi]
+        executionContext = global
       )
       val home = controller.index().apply(FakeRequest(GET, "/"))
 
@@ -35,8 +36,9 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
         injectedSpeaker = mock[SpeakerInt],
         englishSpeaker = mock[EnglishSpeaker],
         injectedWorker = mock[WorkerInt],
+        slickApi = mock[SlickApi],
         userDao = mock[UserDao],
-        slickApi = mock[SlickApi]
+        executionContext = global
       )
       val home = controller.index().apply(FakeRequest(GET, "/"))
 
