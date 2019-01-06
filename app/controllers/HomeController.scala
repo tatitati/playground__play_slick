@@ -8,8 +8,6 @@ import play.api.libs.json.Json
 import play.api.mvc._
 import infrastructure.user.UserDao
 import scala.concurrent.{ExecutionContext, Future}
-import slick.jdbc.MySQLProfile.api._
-
 
 
 @Singleton
