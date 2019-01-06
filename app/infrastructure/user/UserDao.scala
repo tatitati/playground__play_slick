@@ -2,12 +2,12 @@ package infrastructure.user
 
 import App.Domain.User
 import com.google.inject.Inject
-
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import play.db.NamedDatabase
 import slick.jdbc.JdbcProfile
+
 
 class UserDao @Inject()
                         (@NamedDatabase("mydb") protected val dbConfigProvider: DatabaseConfigProvider)
