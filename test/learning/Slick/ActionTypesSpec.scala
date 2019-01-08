@@ -36,7 +36,6 @@ class ActionTypesSpec extends PlaySpec with GuiceOneAppPerTest with Injecting wi
     }
 
     "can combine actions" in {
-
       var actionsCombined = (
         (userTable += User(20, "gggggg", "hhhhhh")) andThen
           (userTable += User(21, "iiiiii", "jjjjjj")) andThen
