@@ -1,0 +1,57 @@
+package learning.Slick
+
+import App.Domain.User
+import infrastructure.user.UserSchema
+import org.scalatest.mockito.MockitoSugar
+import org.scalatestplus.play._
+import org.scalatestplus.play.guice._
+import play.api.Play
+import play.api.db.slick.DatabaseConfigProvider
+import play.api.test._
+import slick.jdbc.{JdbcProfile, MySQLProfile}
+import slick.jdbc.MySQLProfile.api._
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
+
+
+class InsertSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+  val userTable = TableQuery[UserSchema]
+
+  "Slick" should {
+
+    "can insert a single row" in {
+      // clean db
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      exec(userTable.delete, db)
+
+      val rows = exec(
+        userTable += User(9, "eeeeee", "ffffff"),
+        db
+      )
+
+      assert(rows == 1)
+      assert(exec(userTable.result, db).size === 1)
+    }
+
+    "can insert two rows" in {
+      // clean db
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      exec(userTable.delete, db)
+
+
+      val rows = exec(
+        userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")),
+        db
+      )
+
+      assert(rows == Some(2))
+      assert(exec(userTable.result, db).size === 2)
+    }
+  }
+
+  private def exec[T](action: DBIO[T], db: JdbcProfile#Backend#Database): T =
+  {
+    val future = db.run(action)
+    Await.result(future, 2.seconds)
+  }
+}

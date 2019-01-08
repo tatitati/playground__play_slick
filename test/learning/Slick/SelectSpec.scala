@@ -17,48 +17,32 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
 
-class DataSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+class SelectSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
   val userTable = TableQuery[UserSchema]
 
   "Slick" should {
-    "can delete all rows" in {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      exec(userTable.delete, db)
-    }
-
-    "can insert a single row" in {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      val action = userTable += User(9, "eeeeee", "ffffff")
-      val rows = exec(action, db)
-
-      assert(rows == 1)
-    }
-
-    "can insert two rows: Way 1" in {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      val newusers = Seq(
-        User(7, "aaaaaa", "bbbbb"),
-        User(8, "cccccc", "ddddd")
-      )
-
-      val action = userTable ++= newusers
-      val rows = exec(action, db)
-
-      assert(rows == Some(2))
-    }
-
     "can select all" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      exec(userTable.delete, db)
+      exec(
+        userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")),
+        db
+      )
+
       val action = userTable.result
       val rows = exec(action, db)
 
       assert(rows.isInstanceOf[Vector[User]])
-      assert(rows.size === 3)
+      assert(rows.size === 2)
     }
 
     "can select all_types_studio" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      assert(db.isInstanceOf[DatabaseDef])
+      exec(userTable.delete, db)
+      exec(
+        userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")),
+        db
+      )
 
       val action = userTable.result
 
@@ -67,22 +51,6 @@ class DataSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mock
 
       val rows = Await.result(future, 2.seconds)
       assert(rows.isInstanceOf[Vector[User]])
-    }
-
-    "can combine actions" in {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      var actionsCombined = (
-        (userTable += User(20, "gggggg", "hhhhhh")) andThen
-        (userTable += User(21, "iiiiii", "jjjjjj")) andThen
-        (userTable += User(22, "kkkkkk", "llllll"))
-      )
-
-      val rows1 = exec(actionsCombined, db)
-      assert(rows1 == 1)
-
-      val rows2 = exec(userTable.result, db)
-
-      assert(rows2.size === 6)
     }
 
     "can  delete all" in  {
