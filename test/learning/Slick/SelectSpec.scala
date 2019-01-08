@@ -35,7 +35,7 @@ class SelectSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
       assert(rows.size === 2)
     }
 
-    "can select some columns" in {
+    "can select one column" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
       exec(
           userTable.delete andThen
@@ -46,6 +46,19 @@ class SelectSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
       val rows = exec(userTable.map(_.firstName).result, db)
 
       assert(rows === Vector("aaaaaa", "cccccc"))
+    }
+
+    "can select multiple (but not all) columns" in {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      exec(
+        userTable.delete andThen
+          (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        db
+      )
+
+      val rows = exec(userTable.map(t => (t.firstName, t.id)).result, db)
+
+      assert(rows === Vector(("aaaaaa", 7),("cccccc", 8)))
     }
 
     "can select all_types_studio" in {
