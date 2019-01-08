@@ -32,11 +32,10 @@ class WhereSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
 
     "Select filtering" in {
         var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-        exec(userTable.delete, db)
-
         exec(
-          userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")),
-          db
+            userTable.delete andThen
+            (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")))
+          ,db
         )
 
         var rows = exec(userTable.filter(_.firstName === "cccccc").result, db)

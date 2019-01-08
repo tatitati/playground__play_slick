@@ -23,8 +23,11 @@ class SelectSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
   "Slick" should {
     "can select all rows" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      exec(userTable.delete, db)
-      exec(userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")), db)
+      exec(
+          userTable.delete andThen
+          (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        db
+      )
 
       val rows = exec(userTable.result, db)
 
@@ -34,8 +37,11 @@ class SelectSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
 
     "can select some columns" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      exec(userTable.delete, db)
-      exec(userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")), db)
+      exec(
+          userTable.delete andThen
+          (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        db
+      )
 
       val rows = exec(userTable.map(_.firstName).result, db)
 
@@ -44,8 +50,11 @@ class SelectSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
 
     "can select all_types_studio" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      exec(userTable.delete, db)
-      exec(userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")), db)
+      exec(
+          userTable.delete andThen
+          (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        db
+      )
 
       val future = db.run(userTable.result)
       assert(future.isInstanceOf[Future[User]])
