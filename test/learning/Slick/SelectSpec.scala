@@ -21,42 +21,37 @@ class SelectSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
   val userTable = TableQuery[UserSchema]
 
   "Slick" should {
-    "can select all" in {
+    "can select all rows" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
       exec(userTable.delete, db)
-      exec(
-        userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")),
-        db
-      )
+      exec(userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")), db)
 
-      val action = userTable.result
-      val rows = exec(action, db)
+      val rows = exec(userTable.result, db)
 
       assert(rows.isInstanceOf[Vector[User]])
       assert(rows.size === 2)
     }
 
+    "can select some columns" in {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      exec(userTable.delete, db)
+      exec(userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")), db)
+
+      val rows = exec(userTable.map(_.firstName).result, db)
+
+      assert(rows === Vector("aaaaaa", "cccccc"))
+    }
+
     "can select all_types_studio" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
       exec(userTable.delete, db)
-      exec(
-        userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")),
-        db
-      )
+      exec(userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")), db)
 
-      val action = userTable.result
-
-      val future = db.run(action)
+      val future = db.run(userTable.result)
       assert(future.isInstanceOf[Future[User]])
 
       val rows = Await.result(future, 2.seconds)
       assert(rows.isInstanceOf[Vector[User]])
-    }
-
-    "can  delete all" in  {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      val action = userTable.delete
-      exec(action, db)
     }
   }
 

@@ -8,22 +8,39 @@ import org.scalatestplus.play.guice._
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.test._
-import slick.jdbc.JdbcBackend._
 import slick.jdbc.{JdbcProfile, MySQLProfile}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
-
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-
 
 class WhereSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
   val userTable = TableQuery[UserSchema]
 
   "Slick" should {
-    "can filter" in {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      exec(userTable.delete, db)
+    "Create queries when filter instead of Actions" in {
+      var action = userTable.filter(_.firstName === "bbbbb")
+      assert(
+        action.isInstanceOf[Query[
+          UserSchema,
+          UserSchema#TableElementType,
+          Seq
+          ]
+        ]
+      )
+    }
+
+    "Select filtering" in {
+        var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+        exec(userTable.delete, db)
+
+        exec(
+          userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")),
+          db
+        )
+
+        var rows = exec(userTable.filter(_.firstName === "cccccc").result, db)
+        assert(rows.size === 1)
     }
   }
 
