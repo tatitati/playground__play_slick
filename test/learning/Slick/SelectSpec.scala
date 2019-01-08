@@ -8,7 +8,6 @@ import org.scalatestplus.play.guice._
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.test._
-import slick.jdbc.JdbcBackend._
 import slick.jdbc.{JdbcProfile, MySQLProfile}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery

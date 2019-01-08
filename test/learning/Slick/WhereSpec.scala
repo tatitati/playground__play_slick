@@ -20,8 +20,7 @@ class WhereSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
   "Slick" should {
     "Create queries when filter instead of Actions" in {
       var action = userTable.filter(_.firstName === "bbbbb")
-      assert(
-        action.isInstanceOf[Query[
+      assert(action.isInstanceOf[Query[
           UserSchema,
           UserSchema#TableElementType,
           Seq
@@ -30,7 +29,7 @@ class WhereSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
       )
     }
 
-    "Select filtering" in {
+    "Select filtering when equal" in {
         var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
         exec(
             userTable.delete andThen
@@ -39,7 +38,19 @@ class WhereSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
         )
 
         var rows = exec(userTable.filter(_.firstName === "cccccc").result, db)
-        assert(rows.size === 1)
+        assert(rows === Vector(User(8, "cccccc", "ddddd")))
+    }
+
+    "Select filtering when NO equal" in {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      exec(
+        userTable.delete andThen
+          (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")))
+        ,db
+      )
+
+      var rows = exec(userTable.filter(_.firstName =!= "cccccc").result, db)
+      assert(rows === Vector(User(7, "aaaaaa", "bbbbb")))
     }
   }
 
