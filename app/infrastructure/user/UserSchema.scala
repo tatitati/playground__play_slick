@@ -1,6 +1,6 @@
 package infrastructure.user
 
-import App.Domain._
+
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.Tag
 

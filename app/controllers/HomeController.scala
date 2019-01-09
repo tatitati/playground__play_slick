@@ -1,12 +1,12 @@
 package controllers
 
-import App.Domain.User
 import application.Speaker._
 import javax.inject._
 import play.api.db.slick.{DbName, SlickApi}
 import play.api.libs.json.Json
 import play.api.mvc._
-import infrastructure.user.UserDao
+import infrastructure.user.{User, UserDao}
+
 import scala.concurrent.{ExecutionContext, Future}
 
 

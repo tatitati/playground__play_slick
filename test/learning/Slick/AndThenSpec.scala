@@ -1,7 +1,6 @@
 package learning.Slick
 
-import App.Domain.User
-import infrastructure.user.UserSchema
+import infrastructure.user.{User, UserSchema}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
@@ -11,6 +10,7 @@ import play.api.test._
 import slick.jdbc.JdbcProfile
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
+
 import scala.concurrent.Await
 import scala.concurrent.duration._
 

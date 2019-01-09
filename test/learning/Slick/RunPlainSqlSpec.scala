@@ -1,7 +1,6 @@
 package learning.Slick
 
-import App.Domain.User
-import infrastructure.user.UserSchema
+import infrastructure.user.{User, UserSchema}
 import org.scalatest.FlatSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.Play

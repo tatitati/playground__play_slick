@@ -1,6 +1,5 @@
 package infrastructure.user
 
-import App.Domain.User
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._

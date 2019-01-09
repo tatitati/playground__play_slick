@@ -1,7 +1,6 @@
 package learning.Slick
 
-import App.Domain.User
-import infrastructure.user.UserSchema
+import infrastructure.user.{User, UserSchema}
 import org.scalatest.FunSuite
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
