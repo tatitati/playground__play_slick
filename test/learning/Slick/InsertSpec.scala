@@ -74,7 +74,7 @@ class InsertSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
       assert(rows == 2)
 
 
-      
+
       rows = exec(
         userTable returning userTable.map(_.id) += User("eeeeee2", "ffffff2"),
         db
