@@ -5,13 +5,8 @@ scala:
 install:
   sbt reload update
 
+services:
+  - mysql
+
 script:
   - sbt ++$TRAVIS_SCALA_VERSION test
-
-addons:
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
-      - mysql-client
