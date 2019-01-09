@@ -64,7 +64,7 @@ class HomeController @Inject() (
 
     def insert = Action.async { implicit request =>
         userDao.insert(
-            User(2, "firstnameeee", "lastnameeeee")
+            User("firstnameeee", "lastnameeeee")
         ).map(_ => Ok("done"))(executionContext)
     }
 
