@@ -75,6 +75,20 @@ class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Mo
     assert(rows.size === 1)
   }
 
+  test("can use ORDER BY when selecting") {
+    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    exec(
+      userTable.delete andThen
+        (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+      db
+    )
+
+    val rows = exec(userTable.sortBy(_.lastName.desc).result, db)
+
+    assert(rows.isInstanceOf[Vector[User]])
+    assert(rows === Vector(User(8,"cccccc","ddddd"), User(7,"aaaaaa", "bbbbb")))
+  }
+
   test("can select all_types_studio") {
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
