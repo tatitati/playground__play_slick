@@ -2,6 +2,8 @@ language: scala
 scala:
   - 2.12.7
 
+sudo: required
+
 install:
   sbt reload update
 
