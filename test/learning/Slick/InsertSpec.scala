@@ -47,6 +47,40 @@ class InsertSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
       assert(rows == Some(2))
       assert(exec(userTable.result, db).size === 2)
     }
+
+    "can return the id of the new inser" in {
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      exec(
+          userTable.schema.drop andThen
+          userTable.schema.create,
+        db
+      )
+
+
+      exec(userTable.delete, db)
+
+      var rows = exec(
+        userTable returning userTable.map(_.id) += User("eeeeee1", "ffffff1"),
+        db
+      )
+      assert(rows == 1)
+
+
+
+      rows = exec(
+        userTable returning userTable.map(_.id) += User("eeeeee2", "ffffff2"),
+        db
+      )
+      assert(rows == 2)
+
+
+      
+      rows = exec(
+        userTable returning userTable.map(_.id) += User("eeeeee2", "ffffff2"),
+        db
+      )
+      assert(rows == 3)
+    }
   }
 
   private def exec[T](action: DBIO[T], db: JdbcProfile#Backend#Database): T =
