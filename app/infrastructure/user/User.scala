@@ -1,3 +1,7 @@
 package infrastructure.user
 
-case class User(var id: Long, firstName: String, lastName: String)
+case class User(
+                 firstName: String,
+                 lastName: String,
+                 id: Long = 0L
+               )

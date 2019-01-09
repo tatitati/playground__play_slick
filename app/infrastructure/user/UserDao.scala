@@ -29,9 +29,9 @@ class UserDao @Inject() (
     db.run(table.schema.create)
     db.run(
       DBIO.seq(
-        table += User(101, "Acme, Inc.", "99 Market Street"),
-        table += User(49, "Superior Coffee", "1 Party Place"),
-        table += User(150, "The High Ground", "100 Coffee Lane")
+        table += User("Acme, Inc.", "99 Market Street"),
+        table += User("Superior Coffee", "1 Party Place"),
+        table += User("The High Ground", "100 Coffee Lane")
       )
     )
   }

@@ -28,7 +28,7 @@ class UserDaoSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with M
 
   "UserDao" should {
     "Play can inster one row" in {
-      userDao.insert(User(4, "asdfasdf", "asdfadsfadsfasdfadsfad"))
+      userDao.insert(User("asdfasdf", "asdfadsfadsfasdfadsfad"))
     }
   }
 

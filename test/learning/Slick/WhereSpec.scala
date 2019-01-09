@@ -27,30 +27,28 @@ class WhereSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Moc
           ]
         ]
       )
+
+      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      exec(
+          userTable.schema.drop andThen
+          userTable.schema.create andThen
+          (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd")))
+        ,db
+      )
     }
 
     "Select filtering when equal" in {
         var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-        exec(
-            userTable.delete andThen
-            (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")))
-          ,db
-        )
 
         var rows = exec(userTable.filter(_.firstName === "cccccc").result, db)
-        assert(rows === Vector(User(8, "cccccc", "ddddd")))
+        assert(rows === Vector(User("cccccc", "ddddd", 2)))
     }
 
     "Select filtering when NO equal" in {
       var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      exec(
-        userTable.delete andThen
-          (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")))
-        ,db
-      )
 
       var rows = exec(userTable.filter(_.firstName =!= "cccccc").result, db)
-      assert(rows === Vector(User(7, "aaaaaa", "bbbbb")))
+      assert(rows === Vector(User("aaaaaa", "bbbbb", 1)))
     }
   }
 

@@ -18,48 +18,45 @@ class RunPlainSqlSpec extends FlatSpec with GuiceOneAppPerTest with Injecting {
 
 
   "Slick" should "run plain sql queries" in {
-    val db = cleanDb()
+    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     givenDbFixture(db)
 
     var action = sql"""select first_name from user""".as[String]
-    var results = Await.result(db.run(action), 2.seconds)
+    var results = exec(action, db)
     assert(results === Vector("aaaaaa", "cccccc"))
 
 
-    var action1 = sql"""select * from user""".as[(Long, String, String)]
-    var results1 = Await.result(db.run(action1), 2.seconds)
-    assert(results1 === Vector((7,"aaaaaa","bbbbb"), (8,"cccccc","ddddd")))
+    var action1 = sql"""select * from user""".as[(String, String, Long)]
+    var results1 = exec(action1, db)
+    assert(results1 === Vector(("aaaaaa","bbbbb", 1), ("cccccc","ddddd", 2)))
 
 
-    var action3 = sql"""select * from user""".as[(Long, String)]
-    var results3 = Await.result(db.run(action3), 2.seconds)
-    assert(results3 === Vector((7, "aaaaaa"), (8, "cccccc")))
+    var action3 = sql"""select first_name, id from user""".as[(String, Long)]
+    var results3 = exec(action3, db)
+    assert(results3 === Vector(("aaaaaa", 1), ("cccccc", 2)))
 
-    
+
     implicit val getChannelResult = GetResult(r => User(r.<<, r.<<, r.<<))
     var action2 = sql"""select * from user""".as
-    var results2 = Await.result(db.run(action2), 2.seconds)
-    assert(results2 === Vector(User(7,"aaaaaa","bbbbb"), User(8,"cccccc","ddddd")))
+    var results2 = exec(action2, db)
+    assert(results2 === Vector(User("aaaaaa","bbbbb", 1), User("cccccc","ddddd", 2)))
   }
 
-
-
-  private def cleanDb(): JdbcProfile#Backend#Database = {
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-    val action = userTable.delete
+  private def exec[T](action: DBIO[T], db: JdbcProfile#Backend#Database): T =
+  {
     val future = db.run(action)
     Await.result(future, 2.seconds)
-    db
   }
 
-  private def givenDbFixture(db: JdbcProfile#Backend#Database): Unit = {
-    val newusers = Seq(
-      User(7, "aaaaaa", "bbbbb"),
-      User(8, "cccccc", "ddddd")
+  private def givenDbFixture(db: JdbcProfile#Backend#Database) = {
+    exec(
+        userTable.schema.drop andThen
+        userTable.schema.create andThen
+        (userTable ++= Seq(
+          User("aaaaaa", "bbbbb"),
+          User("cccccc", "ddddd")
+        )),
+      db
     )
-
-    val action = userTable ++= newusers
-    val future = db.run(action)
-    Await.result(future, 2.seconds)
   }
 }

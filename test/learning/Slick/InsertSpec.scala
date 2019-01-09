@@ -25,7 +25,7 @@ class InsertSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
       exec(userTable.delete, db)
 
       val rows = exec(
-        userTable += User(9, "eeeeee", "ffffff"),
+        userTable += User("eeeeee", "ffffff"),
         db
       )
 
@@ -40,7 +40,7 @@ class InsertSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
 
 
       val rows = exec(
-        userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd")),
+        userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd")),
         db
       )
 

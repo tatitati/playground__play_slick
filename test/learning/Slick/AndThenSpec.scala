@@ -26,9 +26,9 @@ class AndThenSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with M
 
 
       var actionsCombined = (
-        (userTable += User(20, "gggggg", "hhhhhh")) andThen
-          (userTable += User(21, "iiiiii", "jjjjjj")) andThen
-          (userTable += User(22, "kkkkkk", "llllll"))
+        (userTable += User("gggggg", "hhhhhh")) andThen
+          (userTable += User("iiiiii", "jjjjjj")) andThen
+          (userTable += User("kkkkkk", "llllll"))
         )
 
       val rows1 = exec(actionsCombined, db)

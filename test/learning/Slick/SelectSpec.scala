@@ -23,8 +23,9 @@ class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Mo
   test("can select all rows") {
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
-        userTable.delete andThen
-        (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        userTable.schema.drop andThen
+        userTable.schema.create andThen
+        (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd"))),
       db
     )
 
@@ -38,7 +39,7 @@ class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Mo
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
         userTable.delete andThen
-        (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd"))),
       db
     )
 
@@ -51,20 +52,20 @@ class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Mo
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
       userTable.delete andThen
-        (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd"))),
       db
     )
 
     val rows = exec(userTable.map(t => (t.firstName, t.id)).result, db)
 
-    assert(rows === Vector(("aaaaaa", 7),("cccccc", 8)))
+    assert(rows === Vector(("aaaaaa", 5),("cccccc", 6)))
   }
 
   test("can use LIMIT when selecting") {
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
       userTable.delete andThen
-        (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd"))),
       db
     )
 
@@ -78,21 +79,21 @@ class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Mo
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
       userTable.delete andThen
-        (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd"))),
       db
     )
 
     val rows = exec(userTable.sortBy(_.lastName.desc).result, db)
 
     assert(rows.isInstanceOf[Vector[User]])
-    assert(rows === Vector(User(8,"cccccc","ddddd"), User(7,"aaaaaa", "bbbbb")))
+    assert(rows === Vector(User("cccccc","ddddd", 10), User("aaaaaa", "bbbbb", 9)))
   }
 
   test("can select all_types_studio") {
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
         userTable.delete andThen
-        (userTable ++= Seq(User(7, "aaaaaa", "bbbbb"), User(8, "cccccc", "ddddd"))),
+        (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd"))),
       db
     )
 

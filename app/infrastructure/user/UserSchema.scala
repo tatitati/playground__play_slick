@@ -6,10 +6,10 @@ import slick.lifted.Tag
 
 class UserSchema(tag: Tag) extends Table[User](tag, "user") {
 
-  def id = column[Long]("id", O.PrimaryKey)
   def firstName = column[String]("first_name")
   def lastName = column[String]("last_name")
+  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-  override def * =
-    (id, firstName, lastName) <> (User.tupled, User.unapply)
+  def * =
+    (firstName, lastName, id).mapTo[User]
 }
