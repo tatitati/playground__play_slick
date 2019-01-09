@@ -9,4 +9,5 @@ services:
   - mysql
 
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION test
+  - sbt 'testOnly *TestDatabase'
+  - sbt 'testOnly *Spec'

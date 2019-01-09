@@ -11,7 +11,6 @@ import play.api.test._
 import slick.jdbc.{JdbcProfile, MySQLProfile}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
-
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
