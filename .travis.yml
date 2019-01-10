@@ -2,13 +2,22 @@ language: scala
 scala:
   - 2.12.7
 
-sudo: required
+before_install:
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root -p
+  - sudo service mysql restart
+
 
 install:
   sbt reload update
 
-services:
-  - mysql
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
 
 script:
   - sbt 'testOnly *TestDatabase'
