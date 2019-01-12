@@ -7,10 +7,10 @@ services:
 
 before_install:
   - mysql -e 'CREATE DATABASE play_db;'
-  
+
 install:
   sbt reload update
 
 script:
   - sbt 'testOnly *TestDatabase'
-#  - sbt 'testOnly *Spec'
+  - sbt 'testOnly *Spec'
