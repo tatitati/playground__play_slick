@@ -12,13 +12,11 @@ https://www.playframework.com/documentation/2.6.x/PlaySlick#databaseconfig-via-r
 
 # Research
 
-- [ ] How to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
+cHow to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
 - [x] ~Run plain sql with slick~
 - [x] ~Select only some fields, not all~
 - [x] ~Implement different style of dependency injection (nottations, and explicit binding)~
-- [ ] Slick mapping types (like DateTime)
-- [ ] **Create test database**
-- [ ] Investigate .env files
+- [ ] Joins and Mappers?, what I get when requesting nested entities?
 
 ## Set up
 
