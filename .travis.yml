@@ -7,7 +7,7 @@ services:
 
 before_install:
   - mysql -e 'CREATE DATABASE play_db;'
-  -
+  
 install:
   sbt reload update
 
