@@ -12,5 +12,5 @@ install:
   sbt reload update
 
 script:
-  - sbt 'testOnly *TestDatabase'
+  - sbt 'testOnly *CliCreateDatabase'
   - sbt 'testOnly *Spec'

@@ -3,7 +3,6 @@ package learning.Slick
 import infrastructure.user.{User, UserSchema}
 import org.scalatest.FunSuite
 import org.scalatest.mockito.MockitoSugar
-import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
@@ -15,7 +14,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
 
-class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with MockitoSugar {
+class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with MockitoSugar with Exec {
   val userTable = TableQuery[UserSchema]
 
 
@@ -101,12 +100,5 @@ class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Mo
 
     val rows = Await.result(future, 2.seconds)
     assert(rows.isInstanceOf[Vector[User]])
-  }
-
-
-  private def exec[T](action: DBIO[T], db: JdbcProfile#Backend#Database): T =
-  {
-    val future = db.run(action)
-    Await.result(future, 2.seconds)
   }
 }

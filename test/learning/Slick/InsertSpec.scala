@@ -10,11 +10,7 @@ import play.api.test._
 import slick.jdbc.{JdbcProfile, MySQLProfile}
 import slick.jdbc.MySQLProfile.api._
 
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
-
-
-class InsertSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar {
+class InsertSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar with Exec {
   val userTable = TableQuery[UserSchema]
 
   "Slick" should {
@@ -81,11 +77,5 @@ class InsertSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with Mo
       )
       assert(rows == 3)
     }
-  }
-
-  private def exec[T](action: DBIO[T], db: JdbcProfile#Backend#Database): T =
-  {
-    val future = db.run(action)
-    Await.result(future, 2.seconds)
   }
 }

@@ -8,12 +8,9 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.test.Injecting
 import slick.jdbc.{GetResult, JdbcProfile}
 import slick.lifted.TableQuery
-
-import scala.concurrent.duration._
-import scala.concurrent.Await
 import slick.jdbc.MySQLProfile.api._
 
-class RunPlainSqlSpec extends FlatSpec with GuiceOneAppPerTest with Injecting {
+class RunPlainSqlSpec extends FlatSpec with GuiceOneAppPerTest with Injecting with Exec {
   val userTable = TableQuery[UserSchema]
 
 
@@ -40,12 +37,6 @@ class RunPlainSqlSpec extends FlatSpec with GuiceOneAppPerTest with Injecting {
     var action2 = sql"""select * from user""".as
     var results2 = exec(action2, db)
     assert(results2 === Vector(User("aaaaaa","bbbbb", 1), User("cccccc","ddddd", 2)))
-  }
-
-  private def exec[T](action: DBIO[T], db: JdbcProfile#Backend#Database): T =
-  {
-    val future = db.run(action)
-    Await.result(future, 2.seconds)
   }
 
   private def givenDbFixture(db: JdbcProfile#Backend#Database) = {
