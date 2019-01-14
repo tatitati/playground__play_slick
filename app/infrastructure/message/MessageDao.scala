@@ -1,6 +1,5 @@
 package infrastructure.message
 
-
 import com.google.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.db.slick.DatabaseConfigProvider

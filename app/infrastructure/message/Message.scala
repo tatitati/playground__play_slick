@@ -1,7 +1,7 @@
 package infrastructure.message
 
 case class Message(
-                 firstName: String,
-                 lastName: String,
+                 senderId: Long,
+                 content: String,
                  id: Long = 0L
                )
