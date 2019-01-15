@@ -12,6 +12,8 @@ import play.api.test._
 import slick.jdbc.{JdbcProfile, MySQLProfile}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
 
 
@@ -58,5 +60,27 @@ class LeftJoinSpec extends FunSuite with GuiceOneAppPerTest with Injecting with 
       MessageDao.insertMessage ++= Seq(Message(2, "messageContent2")),
       db
     )
+
+    assert(messageId1 === Vector(1))
+    assert(messageId2 === Vector(2))
   }
+
+  test("LEFT JOIN: request a message (root) with a writer relationship") {
+    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+
+    var future = db.run(messageTable.joinLeft(writerTable).on(_.senderId === _.id).result)
+    var message = Await.result(future, 2.seconds)
+
+    assert(
+      message == Vector(
+      (
+        Message(2,"messageContent1",1),
+        Some(Writer("writer2","writersurname2",2))
+      ), (
+        Message(2,"messageContent2",2),
+        Some(Writer("writer2","writersurname2",2)))
+      )
+    )
+  }
+
 }
