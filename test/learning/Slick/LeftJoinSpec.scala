@@ -1,6 +1,6 @@
 package learning.Slick
 
-import infrastructure.message.MessageSchema
+import infrastructure.message.{Message, MessageDao, MessageSchema}
 import infrastructure.user.{User, UserSchema}
 import infrastructure.writer.{Writer, WriterDao, WriterSchema}
 import org.scalatest.FunSuite
@@ -21,10 +21,10 @@ class LeftJoinSpec extends FunSuite with GuiceOneAppPerTest with Injecting with 
   val messageTable = TableQuery[MessageSchema]
 
 
-  test("LEFT JOIN writer-message") {
+  test("LEFT JOIN: create fixture with two writers") {
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
-        messageTable.schema.drop andThen
+      messageTable.schema.drop andThen
         writerTable.schema.drop andThen
 
         writerTable.schema.create andThen
@@ -42,8 +42,21 @@ class LeftJoinSpec extends FunSuite with GuiceOneAppPerTest with Injecting with 
       db
     )
 
-    println(writerId1)
-    println(writerId2)
+    assert(writerId1 === Vector(1))
+    assert(writerId2 === Vector(2))
+  }
 
+  test("LEFT JOIN: create fixture of two messages referencing one of the writer") {
+    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+
+    var messageId1 = exec(
+      MessageDao.insertMessage ++= Seq(Message(2, "messageContent1")),
+      db
+    )
+
+    var messageId2 = exec(
+      MessageDao.insertMessage ++= Seq(Message(2, "messageContent2")),
+      db
+    )
   }
 }
