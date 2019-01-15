@@ -1,6 +1,6 @@
 package infrastructure.message
 
-import infrastructure.writter.WriterSchema
+import infrastructure.writer.WriterSchema
 import slick.lifted.Tag
 import slick.jdbc.MySQLProfile.api._
 

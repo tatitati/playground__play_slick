@@ -1,4 +1,4 @@
-package infrastructure.writter
+package infrastructure.writer
 
 import com.google.inject.Inject
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
@@ -8,29 +8,32 @@ import slick.jdbc.MySQLProfile.api._
 
 import scala.concurrent.{ExecutionContext, Future}
 
+object WriterDao {
+  lazy val writerTable = TableQuery[WriterSchema]
+  lazy val insertWriter = writerTable returning writerTable.map(_.id)
+}
+
 class WriterDao @Inject()(
                           @NamedDatabase("mydb") protected val dbConfigProvider: DatabaseConfigProvider,
                           executionContext: ExecutionContext
                         ) extends HasDatabaseConfigProvider[JdbcProfile] {
 
 
-  private val table = TableQuery[WriterSchema]
-
   def insert(user: Writer): Future[Unit] = {
-    db.run(table += user).map{ _ => () }(executionContext)
+    db.run(WriterDao.writerTable += user).map{ _ => () }(executionContext)
   }
 
   def dropSchemaAction = {
-    db.run(table.schema.drop)
+    db.run(WriterDao.writerTable.schema.drop)
   }
 
   def createDatabase = {
-    db.run(table.schema.create)
+    db.run(WriterDao.writerTable.schema.create)
     db.run(
       DBIO.seq(
-        table += Writer("Acme, Inc.", "99 Market Street"),
-        table += Writer("Superior Coffee", "1 Party Place"),
-        table += Writer("The High Ground", "100 Coffee Lane")
+        WriterDao.writerTable += Writer("Acme, Inc.", "99 Market Street"),
+        WriterDao.writerTable += Writer("Superior Coffee", "1 Party Place"),
+        WriterDao.writerTable += Writer("The High Ground", "100 Coffee Lane")
       )
     )
   }

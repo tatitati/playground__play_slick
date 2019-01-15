@@ -14,5 +14,7 @@ class MessageDao @Inject() (
                         ) extends HasDatabaseConfigProvider[JdbcProfile] {
 
 
-  private val table = TableQuery[MessageSchema]
+  lazy val messageTable = TableQuery[MessageSchema]
+  lazy val insertMessage = messageTable returning messageTable.map(_.id)
+
 }

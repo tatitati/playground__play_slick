@@ -2,7 +2,7 @@ package learning.Slick
 
 import infrastructure.message.MessageSchema
 import infrastructure.user.{User, UserSchema}
-import infrastructure.writter.WriterSchema
+import infrastructure.writer.WriterSchema
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._

@@ -1,4 +1,4 @@
-package infrastructure.writter
+package infrastructure.writer
 
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.Tag

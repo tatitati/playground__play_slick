@@ -1,4 +1,4 @@
-package infrastructure.writter
+package infrastructure.writer
 
 case class Writer(
                  firstName: String,
