@@ -24,7 +24,7 @@ class LeftJoinSpec extends FunSuite with GuiceOneAppPerTest with Injecting with 
   test("Create fixture with two writers") {
     implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
-      messageTable.schema.drop andThen
+        messageTable.schema.drop andThen
         writerTable.schema.drop andThen
 
         writerTable.schema.create andThen
