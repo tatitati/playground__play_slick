@@ -1,8 +1,8 @@
 package learning.Slick
 
 import infrastructure.user.{User, UserSchema}
+import org.scalatest.FunSuite
 import org.scalatest.mockito.MockitoSugar
-import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
@@ -11,29 +11,27 @@ import slick.jdbc.JdbcProfile
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.TableQuery
 
-class AndThenSpec extends PlaySpec with GuiceOneAppPerTest with Injecting with MockitoSugar with Exec {
+class AndThenSpec extends FunSuite with GuiceOneAppPerTest with Injecting with MockitoSugar with Exec {
   val userTable = TableQuery[UserSchema]
 
-  "Slick" should {
-    "can combine actions" in {
-      // clean db
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-      exec(userTable.delete, db)
+  test("can combine actions") {
+    // clean db
+    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    exec(userTable.delete, db)
 
 
 
-      var actionsCombined = (
-        (userTable += User("gggggg", "hhhhhh")) andThen
-          (userTable += User("iiiiii", "jjjjjj")) andThen
-          (userTable += User("kkkkkk", "llllll"))
-        )
+    var actionsCombined = (
+      (userTable += User("gggggg", "hhhhhh")) andThen
+        (userTable += User("iiiiii", "jjjjjj")) andThen
+        (userTable += User("kkkkkk", "llllll"))
+      )
 
-      val rows1 = exec(actionsCombined, db)
-      assert(rows1 == 1)
+    val rows1 = exec(actionsCombined, db)
+    assert(rows1 == 1)
 
-      val rows2 = exec(userTable.result, db)
+    val rows2 = exec(userTable.result, db)
 
-      assert(rows2.size === 3)
-    }
+    assert(rows2.size === 3)
   }
 }

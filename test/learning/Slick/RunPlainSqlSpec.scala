@@ -1,7 +1,7 @@
 package learning.Slick
 
 import infrastructure.user.{User, UserSchema}
-import org.scalatest.FlatSpec
+import org.scalatest.{FlatSpec, FunSuite}
 import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.Play
 import play.api.db.slick.DatabaseConfigProvider
@@ -10,11 +10,11 @@ import slick.jdbc.{GetResult, JdbcProfile}
 import slick.lifted.TableQuery
 import slick.jdbc.MySQLProfile.api._
 
-class RunPlainSqlSpec extends FlatSpec with GuiceOneAppPerTest with Injecting with Exec {
+class RunPlainSqlSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Exec {
   val userTable = TableQuery[UserSchema]
 
 
-  "Slick" should "run plain sql queries" in {
+  test("run plain sql queries") {
     var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     givenDbFixture(db)
 
