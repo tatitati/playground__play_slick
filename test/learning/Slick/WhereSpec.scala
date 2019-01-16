@@ -37,14 +37,24 @@ class WhereSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Moc
   test("Select filtering when equal") {
       implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
 
-      var rows = exec(userTable.filter(_.firstName === "cccccc").result)
+      var rows = exec(
+        userTable
+          .filter(_.firstName === "cccccc")
+          .result
+      )
+
       assert(rows === Vector(User("cccccc", "ddddd", 2)))
   }
 
   test("Select filtering when NO equal") {
     implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
 
-    var rows = exec(userTable.filter(_.firstName =!= "cccccc").result)
+    var rows = exec(
+      userTable
+        .filter(_.firstName =!= "cccccc")
+        .result
+    )
+
     assert(rows === Vector(User("aaaaaa", "bbbbb", 1)))
   }
 }
