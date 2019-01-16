@@ -36,16 +36,10 @@ class LeftJoinSpec extends FunSuite with GuiceOneAppPerTest with Injecting with 
 
     assert(writerId1 === Vector(1))
     assert(writerId2 === Vector(2))
-  }
 
-  test("Create fixture of two messages referencing one of the writer") {
-    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    exec(MessageDao.insertMessage ++= Seq(Message(writerId2.head, "messageContent1")))
+    exec(MessageDao.insertMessage ++= Seq(Message(writerId2.head, "messageContent2")))
 
-    var messageId1 = exec(MessageDao.insertMessage ++= Seq(Message(2, "messageContent1")))
-    var messageId2 = exec(MessageDao.insertMessage ++= Seq(Message(2, "messageContent2")))
-
-    assert(messageId1 === Vector(1))
-    assert(messageId2 === Vector(2))
   }
 
   test("Request a message (root) with a writer relationship") {
