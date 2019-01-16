@@ -56,32 +56,6 @@ class SelectSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Mo
     assert(rows === Vector(("aaaaaa", 5),("cccccc", 6)))
   }
 
-  test("can use LIMIT when selecting") {
-    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-    exec(
-        userTable.delete andThen
-        (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd")))
-    )
-
-    val rows = exec(userTable.take(1).result)
-
-    assert(rows.isInstanceOf[Vector[User]])
-    assert(rows.size === 1)
-  }
-
-  test("can use ORDER BY when selecting") {
-    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-    exec(
-        userTable.delete andThen
-        (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd")))
-    )
-
-    val rows = exec(userTable.sortBy(_.lastName.desc).result)
-
-    assert(rows.isInstanceOf[Vector[User]])
-    assert(rows === Vector(User("cccccc","ddddd", 10), User("aaaaaa", "bbbbb", 9)))
-  }
-
   test("can select all_types_studio") {
     implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
