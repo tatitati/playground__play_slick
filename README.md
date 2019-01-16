@@ -16,6 +16,7 @@ cHow to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no appli
 - [x] ~Implement different style of dependency injection (nottations, and explicit binding)~
 - [ ] Joins and Mappers?, what I get when requesting nested entities?
 - [ ] DBIO vs Query
+- [ ] How import also import implicits and variables ?
 
 ## Set up
 
