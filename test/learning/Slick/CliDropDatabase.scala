@@ -21,13 +21,12 @@ class CliDropDatabase extends FunSuite with GuiceOneAppPerTest with Injecting wi
 
 
   test("Statements represent the SQL query CREATE TABLE") {
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+
     exec(
       (userTable.schema.drop) andThen
         (messageTable.schema.drop) andThen
         (writerTable.schema.drop)
-      ,
-      db
     )
   }
 }

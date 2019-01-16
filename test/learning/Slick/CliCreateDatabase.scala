@@ -20,12 +20,12 @@ class CliCreateDatabase extends FunSuite with GuiceOneAppPerTest with Injecting 
   val writterTable = TableQuery[WriterSchema]
 
   test("Statements represent the SQL query CREATE TABLE") {
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+
     exec(
       ((userTable.schema.create) andThen
         (writterTable.schema.create) andThen
-        (messageTable.schema.create)),
-      db
+        (messageTable.schema.create))
     )
   }
 

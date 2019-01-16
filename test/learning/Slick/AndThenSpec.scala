@@ -16,8 +16,8 @@ class AndThenSpec extends FunSuite with GuiceOneAppPerTest with Injecting with M
 
   test("can combine actions") {
     // clean db
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-    exec(userTable.delete, db)
+    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    exec(userTable.delete)
 
 
 
@@ -27,10 +27,10 @@ class AndThenSpec extends FunSuite with GuiceOneAppPerTest with Injecting with M
         (userTable += User("kkkkkk", "llllll"))
       )
 
-    val rows1 = exec(actionsCombined, db)
+    val rows1 = exec(actionsCombined)
     assert(rows1 == 1)
 
-    val rows2 = exec(userTable.result, db)
+    val rows2 = exec(userTable.result)
 
     assert(rows2.size === 3)
   }

@@ -16,64 +16,44 @@ class InsertSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Mo
 
   test("can insert a single row") {
     // clean db
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-    exec(userTable.delete, db)
+    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    exec(userTable.delete)
 
-    val rows = exec(
-      userTable += User("eeeeee", "ffffff"),
-      db
-    )
+    val rows = exec(userTable += User("eeeeee", "ffffff"))
 
     assert(rows == 1)
-    assert(exec(userTable.result, db).size === 1)
+    assert(exec(userTable.result).size === 1)
   }
 
   test("can insert two rows") {
     // clean db
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-    exec(userTable.delete, db)
+    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    exec(userTable.delete)
 
 
-    val rows = exec(
-      userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd")),
-      db
-    )
+    val rows = exec(userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd")))
 
     assert(rows == Some(2))
-    assert(exec(userTable.result, db).size === 2)
+    assert(exec(userTable.result).size === 2)
   }
 
   test("can return the id of the new inser") {
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
         userTable.schema.drop andThen
-        userTable.schema.create,
-      db
+        userTable.schema.create
     )
 
 
-    exec(userTable.delete, db)
+    exec(userTable.delete)
 
-    var rows = exec(
-      userTable returning userTable.map(_.id) += User("eeeeee1", "ffffff1"),
-      db
-    )
+    var rows = exec(userTable returning userTable.map(_.id) += User("eeeeee1", "ffffff1"))
     assert(rows == 1)
 
-
-
-    rows = exec(
-      userTable returning userTable.map(_.id) += User("eeeeee2", "ffffff2"),
-      db
-    )
+    rows = exec(userTable returning userTable.map(_.id) += User("eeeeee2", "ffffff2"))
     assert(rows == 2)
 
-
-
-    rows = exec(
-      userTable returning userTable.map(_.id) += User("eeeeee2", "ffffff2"),
-      db
-    )
+    rows = exec(userTable returning userTable.map(_.id) += User("eeeeee2", "ffffff2"))
     assert(rows == 3)
   }
 }

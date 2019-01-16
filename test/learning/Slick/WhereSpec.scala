@@ -16,6 +16,8 @@ class WhereSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Moc
   val userTable = TableQuery[UserSchema]
 
   test("Create queries when filter instead of Actions") {
+    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+
     var action = userTable.filter(_.firstName === "bbbbb")
     assert(action.isInstanceOf[Query[
         UserSchema,
@@ -25,26 +27,24 @@ class WhereSpec extends FunSuite with GuiceOneAppPerTest with Injecting with Moc
       ]
     )
 
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
     exec(
         userTable.schema.drop andThen
         userTable.schema.create andThen
         (userTable ++= Seq(User("aaaaaa", "bbbbb"), User("cccccc", "ddddd")))
-      ,db
     )
   }
 
   test("Select filtering when equal") {
-      var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+      implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
 
-      var rows = exec(userTable.filter(_.firstName === "cccccc").result, db)
+      var rows = exec(userTable.filter(_.firstName === "cccccc").result)
       assert(rows === Vector(User("cccccc", "ddddd", 2)))
   }
 
   test("Select filtering when NO equal") {
-    var db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
 
-    var rows = exec(userTable.filter(_.firstName =!= "cccccc").result, db)
+    var rows = exec(userTable.filter(_.firstName =!= "cccccc").result)
     assert(rows === Vector(User("aaaaaa", "bbbbb", 1)))
   }
 }
