@@ -42,9 +42,13 @@ class LeftJoinSpec extends FunSuite with GuiceOneAppPerTest with Injecting with 
   }
 
   test("Request a message (root) with a writer relationship") {
-    implicit val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
-
-    var future = db.run(messageTable.joinLeft(writerTable).on(_.senderId === _.id).result)
+    val db = DatabaseConfigProvider.get[JdbcProfile]("mydb")(Play.current).db
+    var future = db.run(
+      messageTable
+        .joinLeft(writerTable)
+        .on(_.senderId === _.id)
+        .result
+    )
     var message = Await.result(future, 2.seconds)
 
     assert(
