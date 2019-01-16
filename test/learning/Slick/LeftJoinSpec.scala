@@ -39,7 +39,6 @@ class LeftJoinSpec extends FunSuite with GuiceOneAppPerTest with Injecting with 
 
     exec(MessageDao.insertMessage ++= Seq(Message(writerId2.head, "messageContent1")))
     exec(MessageDao.insertMessage ++= Seq(Message(writerId2.head, "messageContent2")))
-
   }
 
   test("Request a message (root) with a writer relationship") {
@@ -51,11 +50,11 @@ class LeftJoinSpec extends FunSuite with GuiceOneAppPerTest with Injecting with 
     assert(
       message == Vector(
         (
-          Message(2,"messageContent1",1),
-          Some(Writer("writer2","writersurname2",2))
+          Message(2, "messageContent1", 1),
+          Some(Writer("writer2", "writersurname2", 2))
         ), (
-          Message(2,"messageContent2",2),
-          Some(Writer("writer2","writersurname2",2))
+          Message(2, "messageContent2", 2),
+          Some(Writer("writer2", "writersurname2", 2))
         )
       )
     )
