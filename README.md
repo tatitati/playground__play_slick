@@ -36,7 +36,7 @@ sbt run
 sbt test
 ```
 
-# Deploy to AWS with Boxfuse
+## Deploy to AWS with Boxfuse
 
 ``` 
 sbt clean dist
