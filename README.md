@@ -36,6 +36,13 @@ sbt run
 sbt test
 ```
 
+# Deploy to AWS with Boxfuse
+
+``` 
+sbt clean dist
+boxfuse run -env=prod -healthcheck.path=/hello
+```
+
 
 ## Some stuff to play
 
