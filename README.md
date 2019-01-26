@@ -7,9 +7,8 @@
 
 # Research
 
-cHow to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
+- [ ] How to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
 - [x] ~Implement different style of dependency injection (nottations, and explicit binding)~
-- [ ] Joins and Mappers?, what I get when requesting nested entities?
 - [ ] Deploy using AWS Benstalk instead of Boxfuse
 
 
