@@ -4,19 +4,15 @@
 
 ![Build history](https://buildstats.info/travisci/chart/tatitati/play_slick_project?branch=master)
 
-### Notes:
-1- Evolution is broken. Since we introduced DI with GUICE evolutions doesnt work. This is because there is a different approach as it is pointed in the doc:
-https://www.playframework.com/documentation/2.6.x/PlaySlick#databaseconfig-via-runtime-dependency-injection
-
-2- There is no way of running evolutions by command line. This is a very big fucking shame
 
 # Research
 
 cHow to run before/after (setUp/teardDOwn) with ScalaTest? --> getting "no application started error"
 - [x] ~Implement different style of dependency injection (nottations, and explicit binding)~
 - [ ] Joins and Mappers?, what I get when requesting nested entities?
-- [ ] DBIO vs Query
-- [ ] How import also import implicits and variables ?
+- [ ] Deploy using AWS Benstalk instead of Boxfuse
+
+
 
 ## Set up
 
